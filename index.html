@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para o Meu Amor</title>
     <style>
-        /* FUNDO FORÇADO COM INICIAIS E CORAÇÕES */
         body { 
             background-color: #e1bee7; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -15,9 +14,8 @@
             margin: 0; 
             padding: 20px;
             overflow-x: hidden;
-            background-image: radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), 
-                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ctext x='10' y='30' font-family='Arial' font-size='12' font-weight='bold' fill='black'%3EA%26M%3C/text%3E%3Ctext x='40' y='60' font-size='12'%3E❤️%3C/text%3E%3C/svg%3E");
-            background-size: 80px 80px;
+            /* FUNDO COM A&M PRETO E ❤️ REPETIDOS */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext x='15' y='35' font-family='Arial' font-size='12' font-weight='bold' fill='black'%3EA%26M%3C/text%3E%3Ctext x='60' y='75' font-size='12'%3E❤️%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
         }
 
@@ -60,6 +58,7 @@
             cursor: pointer; 
             font-size: 1.1rem;
             margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
         }
 
         #mensagem-area { 
@@ -70,7 +69,6 @@
             border-radius: 15px; 
             border: 1px solid #e1bee7; 
             color: #7b1fa2; 
-            font-weight: 500;
         }
 
         .coracao-voando { 
@@ -83,7 +81,7 @@
 </head>
 <body>
 
-    <audio id="musica-amor" preload="auto">
+    <audio id="musica-amor">
         <source src="https://www.myinstants.com/media/sounds/ainda-bem-vanessa-da-mata.mp3" type="audio/mpeg">
     </audio>
 
@@ -111,12 +109,11 @@
         document.getElementById('dias-count').innerText = Math.floor((hoje - inicio) / (1000 * 60 * 60 * 24));
 
         function surpresaTotal() {
-            // 1. FORÇAR A MÚSICA
+            // 1. Tocar Música
             const som = document.getElementById('musica-amor');
-            som.volume = 1.0;
-            som.play().catch(() => console.log("Erro ao tocar som"));
+            som.play().catch(e => console.log("Som bloqueado até clicar"));
 
-            // 2. MENSAGEM ALEATÓRIA
+            // 2. Frases
             const frases = [
                 "Didy e Teteu, Teteu e Didy ❤️",
                 "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
@@ -127,43 +124,46 @@
             document.getElementById('texto-random').innerText = frases[Math.floor(Math.random() * frases.length)];
             document.getElementById('mensagem-area').style.display = 'block';
 
-            // 3. EXPLOSÃO DE CORAÇÕES
+            // 3. Explosão de Corações
             for (let i = 0; i < 40; i++) {
-                animarCoracao();
+                animarCoracao(i);
             }
         }
 
-        function animarCoracao() {
+        function animarCoracao(i) {
             const h = document.createElement('div');
             h.className = 'coracao-voando';
             h.innerHTML = i % 2 === 0 ? '❤️' : '💜';
-            document.body.appendChild(c);
+            document.body.appendChild(h);
 
+            // Posição centralizada
             const x = window.innerWidth / 2;
             const y = window.innerHeight / 2;
-            c.style.left = x + 'px';
-            c.style.top = y + 'px';
+            h.style.left = x + 'px';
+            h.style.top = y + 'px';
 
             const angulo = Math.random() * Math.PI * 2;
-            const forca = 5 + Math.random() * 12;
+            const forca = 5 + Math.random() * 15;
             let velX = Math.cos(angulo) * forca;
             let velY = Math.sin(angulo) * forca;
             let opacity = 1;
 
             const loop = setInterval(() => {
-                const topo = parseFloat(c.style.top);
-                const esquerda = parseFloat(c.style.left);
-                c.style.top = (topo + velY) + 'px';
-                c.style.left = (esquerda + velX) + 'px';
-                velY += 0.4; // gravidade
+                const topo = parseFloat(h.style.top);
+                const esquerda = parseFloat(h.style.left);
+                
+                h.style.top = (topo + velY) + 'px';
+                h.style.left = (esquerda + velX) + 'px';
+                
+                velY += 0.5; // Gravidade
                 opacity -= 0.02;
-                c.style.opacity = opacity;
+                h.style.opacity = opacity;
 
                 if (opacity <= 0) {
                     clearInterval(loop);
-                    c.remove();
+                    h.remove();
                 }
-            }, 20);
+            }, 25);
         }
     </script>
 </body>
