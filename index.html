@@ -5,77 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para o Meu Amor</title>
     <style>
-        body { background-color: #fce4ec; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
-        .container { max-width: 450px; width: 100%; background: white; padding: 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
-        .polaroid { background: white; padding: 10px 10px 35px 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.15); transform: rotate(-2deg); margin-bottom: 25px; border: 1px solid #eee; }
-        .polaroid img { width: 100%; border-radius: 5px; height: 350px; object-fit: cover; }
-        h1 { color: #d81b60; margin: 10px 0; font-size: 26px; }
-        .contador { background: #fce4ec; padding: 12px; border-radius: 15px; font-weight: bold; color: #ad1457; margin: 15px 0; font-size: 1.1rem; }
-        .btn-abrir { background: #d81b60; color: white; border: none; padding: 16px; border-radius: 50px; width: 100%; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1rem; }
-        .btn-abrir:hover { transform: scale(1.02); background: #c2185b; }
-        #mensagem-area { display: none; margin-top: 20px; padding: 15px; background: #fff5f8; border-radius: 15px; border: 1px solid #f8bbd0; color: #ad1457; font-size: 1.1rem; animation: fadeIn 0.8s; }
+        body { 
+            background-color: #e1bee7; /* Lilás solicitado */
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            margin: 0; 
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container { 
+            max-width: 450px; 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 25px; 
+            border-radius: 30px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            text-align: center; 
+            z-index: 10;
+        }
+        .polaroid { 
+            background: white; 
+            padding: 10px 10px 35px 10px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15); 
+            transform: rotate(-2deg); 
+            margin-bottom: 25px; 
+            border: 1px solid #eee; 
+        }
+        .polaroid img { 
+            width: 100%; 
+            border-radius: 5px; 
+            max-height: 450px; 
+            object-fit: cover;
+        }
+        h1 { color: #8e24aa; margin: 10px 0; font-size: 26px; }
+        .contador { background: #f3e5f5; padding: 12px; border-radius: 15px; font-weight: bold; color: #7b1fa2; margin: 15px 0; font-size: 1.1rem; }
+        .btn-abrir { 
+            background: #9c27b0; 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 50px; 
+            width: 100%; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+        }
+        .btn-abrir:hover { transform: scale(1.05); background: #7b1fa2; }
+        #mensagem-area { 
+            display: none; 
+            margin-top: 20px; 
+            padding: 15px; 
+            background: #fdf7ff; 
+            border-radius: 15px; 
+            border: 1px solid #e1bee7; 
+            color: #7b1fa2; 
+            font-size: 1.1rem; 
+            animation: fadeIn 0.8s; 
+        }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .heart { position: fixed; color: #ff4b6e; font-size: 20px; animation: float 4s linear infinite; z-index: 1000; }
-        @keyframes float { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+        .heart-firework { position: fixed; pointer-events: none; z-index: 999; font-size: 25px; user-select: none; }
     </style>
 </head>
 <body>
 
+    <div id="player" style="position: absolute; top: -1000px;"></div>
+
     <div class="container">
         <div class="polaroid">
-            <img src="https://images.unsplash.com/photo-1518199266791-739d6ff26ef5?q=80&w=1000&auto=format&fit=crop" alt="Nossa Foto">
+            <img src="https://files.oaiusercontent.com/file-D59f3940-faf9-4972-a1c1-d357d3d2d3c5?se=2026-03-10T21%3A05%3A38Z&sp=r&sv=24.1&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dimage_412a54.jpg&sig=vNlG9GzYhM9J%2BRf0QhW79m9zYp3X9m9zYp3X9m9zYp3X9m" alt="Nossa Foto">
         </div>
 
         <h1>Feliz 1 ano e 2 meses! ❤️</h1>
-        
-        <div class="contador">
-            Estamos juntos há <span id="dias"></span> dias!
-        </div>
-
-        <p style="color: #666;">Desde aquele Halloween de 2024, quando nos conhecemos de Coringa e Vampiro, minha vida ficou completa com você, Matheus.</p>
-
-        <button class="btn-abrir" onclick="gerarMensagem()">Ver Surpresa do Dia</button>
-
-        <div id="mensagem-area">
-            <p id="texto-mensagem"></p>
-        </div>
+        <div class="contador">Estamos juntos há <span id="dias"></span> dias!</div>
+        <p style="color: #666; font-size: 0.9rem;">Desde aquele Halloween de 2024, quando nos conhecemos de Coringa e Vampiro, minha vida ficou completa com você, Matheus.</p>
+        <button class="btn-abrir" onclick="ativarSurpresa()">Ver Surpresa do Dia & Ouvir Nossa Música 🎵</button>
+        <div id="mensagem-area"><p id="texto-mensagem"></p></div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Cálculo automático dos dias
+        let player;
+        const musicaId = '766mI2N-B2o'; // Vanessa da Mata - Ainda Bem
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: musicaId,
+                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': musicaId }
+            });
+        }
+
         const dataInicio = new Date('2024-10-19');
         const hoje = new Date();
-        const diferenca = hoje - dataInicio;
-        const diasJuntos = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-        document.getElementById('dias').innerText = diasJuntos;
+        document.getElementById('dias').innerText = Math.floor((hoje - dataInicio) / (1000 * 60 * 60 * 24));
 
         const mensagens = [
-            "Você é o Coringa mais especial que eu poderia encontrar! ❤️",
+            "Ainda bem que te encontrei agora tenho você... ❤️",
+            "Você é o Coringa mais especial que eu poderia encontrar!",
             "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
             "Obrigada por ser meu parceiro desde aquela primeira festa.",
             "Cada dia com você me faz ter certeza: te escolheria mil vezes.",
-            "Feliz nosso dia! Que venham muitos outros meses ao seu lado.",
             "Você é o meu porto seguro, Matheus. Te amo demais!"
         ];
 
-        function gerarMensagem() {
+        function ativarSurpresa() {
+            if(player && player.playVideo) { player.playVideo(); }
             const random = Math.floor(Math.random() * mensagens.length);
             document.getElementById('texto-mensagem').innerText = mensagens[random];
             document.getElementById('mensagem-area').style.display = 'block';
-            criarCoracoes();
+            lancarFogos();
         }
 
-        function criarCoracoes() {
-            for(let i=0; i<20; i++) {
+        function lancarFogos() {
+            for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart';
-                    heart.innerHTML = '❤️';
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    document.body.appendChild(heart);
-                    setTimeout(() => heart.remove(), 4000);
-                }, i * 150);
+                    const h = document.createElement('div');
+                    h.className = 'heart-firework';
+                    h.innerHTML = i % 2 === 0 ? '❤️' : '💜';
+                    const startX = window.innerWidth / 2;
+                    const startY = window.innerHeight / 2;
+                    h.style.left = startX + 'px'; h.style.top = startY + 'px';
+                    document.body.appendChild(h);
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = 4 + Math.random() * 12;
+                    let vx = Math.cos(angle) * velocity;
+                    let vy = Math.sin(angle) * velocity;
+                    let posX = startX, posY = startY, opac = 1;
+                    const move = setInterval(() => {
+                        posX += vx; posY += vy; vy += 0.1; opac -= 0.015;
+                        h.style.left = posX + 'px'; h.style.top = posY + 'px'; h.style.opacity = opac;
+                        if (opac <= 0) { clearInterval(move); h.remove(); }
+                    }, 20);
+                }, i * 40);
             }
         }
     </script>
