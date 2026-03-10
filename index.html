@@ -13,20 +13,20 @@
             align-items: center; 
             margin: 0; 
             padding: 20px;
-            /* FUNDO COM A&M E CORAÇÕES REPETIDOS */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ctext x='10' y='30' font-family='Arial' font-size='10' fill='black' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='45' y='65' font-family='Arial' font-size='10' fill='red'%3E❤️%3C/text%3E%3C/svg%3E");
+            /* FUNDO COM A&M PRETO E ❤️ VERMELHO ESPALHADOS POR TUDO */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext x='15' y='35' font-family='Arial' font-size='12' fill='black' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='65' y='75' font-family='Arial' font-size='12' fill='red'%3E❤️%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
         }
 
         .container { 
             max-width: 450px; 
-            width: 100%; 
+            width: 90%; 
             background: rgba(255, 255, 255, 0.98); 
             padding: 25px; 
             border-radius: 30px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
             text-align: center; 
-            position: relative;
+            z-index: 10;
         }
 
         .polaroid { 
@@ -49,12 +49,13 @@
             background: #9c27b0; 
             color: white; 
             border: none; 
-            padding: 16px; 
+            padding: 18px; 
             border-radius: 50px; 
             width: 100%; 
             font-weight: bold; 
-            cursor: pointer;
-            font-size: 1rem;
+            cursor: pointer; 
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
         }
 
         #mensagem-area { 
@@ -65,6 +66,7 @@
             border-radius: 15px; 
             border: 1px solid #e1bee7; 
             color: #7b1fa2; 
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -77,14 +79,14 @@
             <img src="foto.jpg.jpeg" alt="Nossa Foto">
         </div>
 
-        <h1>Feliz 1 ano e 2 meses! ❤️</h1>
-        <p>Estamos juntos há <span id="dias"></span> dias!</p>
+        <h1 style="color: #8e24aa;">Feliz 1 ano e 2 meses! ❤️</h1>
+        <p style="font-weight: bold; color: #7b1fa2;">Estamos juntos há <span id="dias"></span> dias!</p>
         
-        <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">
-            Desde aquele Halloween de 2024, quando nos conhecemos, minha vida ficou completa com você, momo.
+        <p style="color: #666; font-size: 0.95rem; margin-bottom: 20px;">
+            Desde aquele Halloween de 2024, quando nos conhecemos, minha vida ficou completa com você.
         </p>
         
-        <button class="btn-abrir" onclick="ativarSurpresa()">Ver Surpresa do Dia & Ouvir Música ❤️</button>
+        <button class="btn-abrir" onclick="ativarSurpresa()">Ver Surpresa do Dia ❤️</button>
 
         <div id="mensagem-area"><p id="texto-mensagem"></p></div>
     </div>
@@ -103,10 +105,14 @@
         document.getElementById('dias').innerText = Math.floor((new Date() - dataInicio) / (1000 * 60 * 60 * 24));
 
         function ativarSurpresa() {
-            if(player && player.playVideo) { player.playVideo(); player.setVolume(100); }
+            // A música só começa quando clica aqui
+            if(player && player.playVideo) { 
+                player.playVideo(); 
+                player.setVolume(100); 
+            }
             
             const mensagens = [
-                "DIdy e Teteu, Teteu e Didy ❤️",
+                "Didy e Teteu, Teteu e Didy ❤️",
                 "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
                 "Obrigada por ser meu parceiro desde aquela primeira festa.",
                 "Ainda bem que te encontrei agora tenho você... ❤️",
