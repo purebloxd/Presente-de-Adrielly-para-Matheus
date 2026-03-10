@@ -6,7 +6,7 @@
     <title>Para o Meu Amor</title>
     <style>
         body { 
-            background-color: #e1bee7; 
+            background-color: #e1bee7; /* Fundo Lilás */
             font-family: 'Segoe UI', sans-serif; 
             display: flex; 
             flex-direction: column; 
@@ -14,8 +14,8 @@
             margin: 0; 
             padding: 20px;
             overflow-x: hidden;
-            /* Iniciais A&M pretas e corações vermelhos espalhados por TUDO */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ctext x='10' y='40' font-family='Arial' font-size='12' fill='rgba(0,0,0,0.7)' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='45' y='40' font-family='Arial' font-size='12' fill='rgba(255,0,0,0.5)'%3E❤️%3C/text%3E%3Ctext x='70' y='100' font-family='Arial' font-size='12' fill='rgba(0,0,0,0.7)' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='105' y='100' font-family='Arial' font-size='12' fill='rgba(255,0,0,0.5)'%3E❤️%3C/text%3E%3C/svg%3E");
+            /* A&M PRETO E CORAÇÕES VERMELHOS ESPALHADOS */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext x='10' y='30' font-family='Arial' font-size='10' fill='black' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='50' y='70' font-family='Arial' font-size='10' fill='red'%3E❤️%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
         }
 
@@ -46,7 +46,7 @@
             display: block;
         }
 
-        h1 { color: #8e24aa; font-size: 24px; margin: 10px 0; }
+        h1 { color: #8e24aa; font-size: 24px; }
         .contador { background: #f3e5f5; padding: 12px; border-radius: 15px; font-weight: bold; color: #7b1fa2; margin: 15px 0; }
         
         .btn-abrir { 
@@ -59,7 +59,6 @@
             font-weight: bold; 
             cursor: pointer; 
             font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
         }
 
         #mensagem-area { 
@@ -71,18 +70,18 @@
             border: 1px solid #e1bee7; 
             color: #7b1fa2; 
         }
-
-        .heart-firework { position: fixed; pointer-events: none; z-index: 999; font-size: 20px; }
     </style>
 </head>
 <body>
 
-    <div id="player" style="position: absolute; top: -1000px;"></div>
+    <audio id="musica" loop>
+        <source src="https://www.myinstants.com/media/sounds/ainda-bem-vanessa-da-mata.mp3" type="audio/mpeg">
+        </audio>
+    <div id="player" style="display:none"></div>
 
     <div class="container">
         <div class="polaroid">
-            <img src="foto.jpg.jpeg" alt="Nossa Foto">
-        </div>
+            <img src="foto.jpg.jpeg" alt="Nossa Foto"> </div>
 
         <h1>Feliz 1 ano e 2 meses! ❤️</h1>
         <div class="contador">Estamos juntos há <span id="dias"></span> dias!</div>
@@ -96,16 +95,12 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // Sistema de backup para a música
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '0',
-                width: '0',
-                videoId: '766mI2N-B2o', 
-                playerVars: { 'autoplay': 0, 'controls': 0, 'enablejsapi': 1 },
-                events: {
-                    'onReady': function(event) { event.target.setVolume(100); }
-                }
+                height: '0', width: '0', videoId: '766mI2N-B2o',
+                events: { 'onReady': function(e) { e.target.setVolume(100); } }
             });
         }
 
@@ -114,30 +109,25 @@
         document.getElementById('dias').innerText = Math.floor((hoje - dataInicio) / (1000 * 60 * 60 * 24));
 
         function ativarSurpresa() {
-            if(player && player.playVideo) { player.playVideo(); }
-            document.getElementById('texto-mensagem').innerText = "Ainda bem que te encontrei agora tenho você... ❤️";
-            document.getElementById('mensagem-area').style.display = 'block';
-            lancarFogos();
-        }
+            // Tenta tocar o áudio direto primeiro (mais garantido)
+            const audio = document.getElementById('musica');
+            audio.play().catch(() => {
+                // Se falhar, tenta o YouTube
+                if(player && player.playVideo) { player.playVideo(); }
+            });
 
-        function lancarFogos() {
-            for (let i = 0; i < 40; i++) {
-                setTimeout(() => {
-                    const h = document.createElement('div');
-                    h.className = 'heart-firework';
-                    h.innerHTML = '❤️';
-                    document.body.appendChild(h);
-                    const startX = window.innerWidth / 2, startY = window.innerHeight / 2;
-                    const angle = Math.random() * Math.PI * 2, velocity = 5 + Math.random() * 10;
-                    let vx = Math.cos(angle) * velocity, vy = Math.sin(angle) * velocity;
-                    let posX = startX, posY = startY, op = 1;
-                    const move = setInterval(() => {
-                        posX += vx; posY += vy; vy += 0.2; op -= 0.02;
-                        h.style.left = posX + 'px'; h.style.top = posY + 'px'; h.style.opacity = op;
-                        if (op <= 0) { clearInterval(move); h.remove(); }
-                    }, 20);
-                }, i * 50);
-            }
+            const mensagens = [
+                "Didy e Teteu, Teteu e Didy ❤️",
+                "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
+                "Obrigada por ser meu parceiro desde aquela primeira festa.",
+                "Cada dia com você me faz ter certeza que eu te escolheria mil vezes.",
+                "Ainda bem que te encontrei agora tenho você... ❤️",
+                "Você é o meu porto seguro, te amo demais!"
+            ];
+            
+            const random = Math.floor(Math.random() * mensagens.length);
+            document.getElementById('texto-mensagem').innerText = mensagens[random];
+            document.getElementById('mensagem-area').style.display = 'block';
         }
     </script>
 </body>
