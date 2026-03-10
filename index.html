@@ -7,6 +7,9 @@
     <style>
         body { 
             background-color: #e1bee7; /* Lilás solicitado */
+            /* Padrão de fundo com corações e iniciais "A&M" em preto */
+            background-image: linear-gradient(0deg, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
             font-family: 'Segoe UI', sans-serif; 
             display: flex; 
             flex-direction: column; 
@@ -14,7 +17,28 @@
             margin: 0; 
             padding: 20px;
             overflow-x: hidden;
+            position: relative;
         }
+
+        /* Camada para espalhar as iniciais e corações pretos */
+        body::before {
+            content: "A&M ❤️ A&M ❤️ A&M ❤️ A&M ❤️ A&M";
+            position: fixed;
+            font-size: 14px;
+            color: rgba(0,0,0,0.2);
+            z-index: -1;
+            opacity: 0.3;
+            width: 200%;
+            height: 200%;
+            display: flex;
+            flex-wrap: wrap;
+            top: -50%;
+            left: -50%;
+            justify-content: space-around;
+            transform: rotate(-10deg);
+            padding: 50px;
+        }
+
         .container { 
             max-width: 450px; 
             width: 100%; 
@@ -36,8 +60,9 @@
         .polaroid img { 
             width: 100%; 
             border-radius: 5px; 
-            max-height: 450px; 
+            height: 350px; 
             object-fit: cover;
+            background: #f3e5f5;
         }
         h1 { color: #8e24aa; margin: 10px 0; font-size: 26px; }
         .contador { background: #f3e5f5; padding: 12px; border-radius: 15px; font-weight: bold; color: #7b1fa2; margin: 15px 0; font-size: 1.1rem; }
@@ -67,7 +92,15 @@
             animation: fadeIn 0.8s; 
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .heart-firework { position: fixed; pointer-events: none; z-index: 999; font-size: 25px; user-select: none; }
+        
+        /* Estilo dos fogos de coração */
+        .heart-firework {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            font-size: 20px;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -76,14 +109,22 @@
 
     <div class="container">
         <div class="polaroid">
-            <img src="https://files.oaiusercontent.com/file-D59f3940-faf9-4972-a1c1-d357d3d2d3c5?se=2026-03-10T21%3A05%3A38Z&sp=r&sv=24.1&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dimage_412a54.jpg&sig=vNlG9GzYhM9J%2BRf0QhW79m9zYp3X9m9zYp3X9m9zYp3X9m" alt="Nossa Foto">
+            <img src="image_412a54.jpg" alt="Nossa Foto">
         </div>
 
         <h1>Feliz 1 ano e 2 meses! ❤️</h1>
-        <div class="contador">Estamos juntos há <span id="dias"></span> dias!</div>
+        
+        <div class="contador">
+            Estamos juntos há <span id="dias"></span> dias!
+        </div>
+
         <p style="color: #666; font-size: 0.9rem;">Desde aquele Halloween de 2024, quando nos conhecemos de Coringa e Vampiro, minha vida ficou completa com você, Matheus.</p>
-        <button class="btn-abrir" onclick="ativarSurpresa()">Ver Surpresa do Dia & Ouvir Nossa Música 🎵</button>
-        <div id="mensagem-area"><p id="texto-mensagem"></p></div>
+
+        <button class="btn-abrir" onclick="ativarSurpresa()">Ver Surpresa do Dia & Play ❤️</button>
+
+        <div id="mensagem-area">
+            <p id="texto-mensagem"></p>
+        </div>
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -102,22 +143,28 @@
 
         const dataInicio = new Date('2024-10-19');
         const hoje = new Date();
-        document.getElementById('dias').innerText = Math.floor((hoje - dataInicio) / (1000 * 60 * 60 * 24));
+        const diasJuntos = Math.floor((hoje - dataInicio) / (1000 * 60 * 60 * 24));
+        document.getElementById('dias').innerText = diasJuntos;
 
         const mensagens = [
-            "Ainda bem que te encontrei agora tenho você... ❤️",
-            "Você é o Coringa mais especial que eu poderia encontrar!",
+            "Você é o Coringa mais especial que eu poderia encontrar! ❤️",
             "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
             "Obrigada por ser meu parceiro desde aquela primeira festa.",
             "Cada dia com você me faz ter certeza: te escolheria mil vezes.",
+            "Ainda bem que te encontrei agora tenho você... ❤️",
             "Você é o meu porto seguro, Matheus. Te amo demais!"
         ];
 
         function ativarSurpresa() {
+            // Tocar música
             if(player && player.playVideo) { player.playVideo(); }
+            
+            // Mostrar mensagem
             const random = Math.floor(Math.random() * mensagens.length);
             document.getElementById('texto-mensagem').innerText = mensagens[random];
             document.getElementById('mensagem-area').style.display = 'block';
+            
+            // Explosão de corações
             lancarFogos();
         }
 
@@ -129,19 +176,34 @@
                     h.innerHTML = i % 2 === 0 ? '❤️' : '💜';
                     const startX = window.innerWidth / 2;
                     const startY = window.innerHeight / 2;
-                    h.style.left = startX + 'px'; h.style.top = startY + 'px';
+                    h.style.left = startX + 'px';
+                    h.style.top = startY + 'px';
+                    
                     document.body.appendChild(h);
+
                     const angle = Math.random() * Math.PI * 2;
-                    const velocity = 4 + Math.random() * 12;
-                    let vx = Math.cos(angle) * velocity;
-                    let vy = Math.sin(angle) * velocity;
-                    let posX = startX, posY = startY, opac = 1;
+                    const velocity = 5 + Math.random() * 10;
+                    const vx = Math.cos(angle) * velocity;
+                    const vy = Math.sin(angle) * velocity;
+                    
+                    let posX = startX;
+                    let posY = startY;
+                    let opacity = 1;
+
                     const move = setInterval(() => {
-                        posX += vx; posY += vy; vy += 0.1; opac -= 0.015;
-                        h.style.left = posX + 'px'; h.style.top = posY + 'px'; h.style.opacity = opac;
-                        if (opac <= 0) { clearInterval(move); h.remove(); }
+                        posX += vx;
+                        posY += vy;
+                        opacity -= 0.02;
+                        h.style.left = posX + 'px';
+                        h.style.top = posY + 'px';
+                        h.style.opacity = opacity;
+
+                        if (opacity <= 0) {
+                            clearInterval(move);
+                            h.remove();
+                        }
                     }, 20);
-                }, i * 40);
+                }, i * 50);
             }
         }
     </script>
