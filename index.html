@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para o Meu Amor</title>
     <style>
+        /* FUNDO FORÇADO COM INICIAIS E CORAÇÕES */
         body { 
             background-color: #e1bee7; 
-            font-family: 'Segoe UI', sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             margin: 0; 
             padding: 20px;
             overflow-x: hidden;
-            /* FUNDO A&M PRETO E ❤️ VERMELHO */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext x='10' y='30' font-family='Arial' font-size='12' fill='black' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='60' y='80' font-family='Arial' font-size='12' fill='red'%3E❤️%3C/text%3E%3C/svg%3E");
+            background-image: radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), 
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ctext x='10' y='30' font-family='Arial' font-size='12' font-weight='bold' fill='black'%3EA%26M%3C/text%3E%3Ctext x='40' y='60' font-size='12'%3E❤️%3C/text%3E%3C/svg%3E");
+            background-size: 80px 80px;
             background-repeat: repeat;
         }
 
@@ -36,13 +38,13 @@
             padding: 10px 10px 35px 10px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.15); 
             transform: rotate(-2deg); 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
         }
 
         .polaroid img { 
             width: 100%; 
             border-radius: 5px; 
-            max-height: 400px; 
+            max-height: 380px; 
             object-fit: cover;
             display: block;
         }
@@ -57,7 +59,7 @@
             font-weight: bold; 
             cursor: pointer; 
             font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+            margin-top: 10px;
         }
 
         #mensagem-area { 
@@ -68,14 +70,20 @@
             border-radius: 15px; 
             border: 1px solid #e1bee7; 
             color: #7b1fa2; 
+            font-weight: 500;
         }
 
-        .heart-particle { position: fixed; pointer-events: none; z-index: 999; font-size: 20px; }
+        .coracao-voando { 
+            position: fixed; 
+            pointer-events: none; 
+            z-index: 9999; 
+            font-size: 24px; 
+        }
     </style>
 </head>
 <body>
 
-    <audio id="musica" loop>
+    <audio id="musica-amor" preload="auto">
         <source src="https://www.myinstants.com/media/sounds/ainda-bem-vanessa-da-mata.mp3" type="audio/mpeg">
     </audio>
 
@@ -84,69 +92,77 @@
             <img src="foto.jpg.jpeg" alt="Nossa Foto">
         </div>
 
-        <h1 style="color: #8e24aa;">Feliz 1 ano e 2 meses! ❤️</h1>
-        <p style="font-weight: bold;">Estamos juntos há <span id="dias"></span> dias!</p>
+        <h2 style="color: #8e24aa; margin-bottom: 5px;">Feliz 1 ano e 2 meses! ❤️</h2>
+        <p style="font-weight: bold; color: #7b1fa2; margin-top: 0;">Estamos juntos há <span id="dias-count"></span> dias!</p>
         
-        <p style="color: #666; font-size: 0.95rem; margin-bottom: 20px;">
+        <p style="color: #555; font-size: 0.95rem; line-height: 1.4;">
             Desde aquele Halloween de 2024, quando nos conhecemos, minha vida ficou completa com você.
         </p>
         
-        <button class="btn-abrir" onclick="ativarTudo()">Ver Surpresa do Dia ❤️</button>
+        <button class="btn-abrir" onclick="surpresaTotal()">Ver Surpresa do Dia ❤️</button>
 
-        <div id="mensagem-area"><p id="texto-mensagem"></p></div>
+        <div id="mensagem-area"><p id="texto-random"></p></div>
     </div>
 
     <script>
-        const dataInicio = new Date('2024-10-19');
-        document.getElementById('dias').innerText = Math.floor((new Date() - dataInicio) / (1000 * 60 * 60 * 24));
+        // Contador de dias
+        const inicio = new Date('2024-10-19');
+        const hoje = new Date();
+        document.getElementById('dias-count').innerText = Math.floor((hoje - inicio) / (1000 * 60 * 60 * 24));
 
-        function ativarTudo() {
-            // 1. Tocar Música
-            const audio = document.getElementById('musica');
-            audio.play().catch(e => console.log("Aguardando interação para tocar som."));
+        function surpresaTotal() {
+            // 1. FORÇAR A MÚSICA
+            const som = document.getElementById('musica-amor');
+            som.volume = 1.0;
+            som.play().catch(() => console.log("Erro ao tocar som"));
 
-            // 2. Mostrar Mensagem
-            const mensagens = [
+            // 2. MENSAGEM ALEATÓRIA
+            const frases = [
                 "Didy e Teteu, Teteu e Didy ❤️",
                 "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
-                "Obrigada por ser meu parceiro desde aquela festa.",
+                "Obrigada por ser meu parceiro desde aquela primeira festa.",
                 "Ainda bem que te encontrei agora tenho você... ❤️",
                 "Você é o meu porto seguro, te amo demais!"
             ];
-            document.getElementById('texto-mensagem').innerText = mensagens[Math.floor(Math.random() * mensagens.length)];
+            document.getElementById('texto-random').innerText = frases[Math.floor(Math.random() * frases.length)];
             document.getElementById('mensagem-area').style.display = 'block';
 
-            // 3. Explosão de Corações
-            for (let i = 0; i < 30; i++) {
-                criarCoracao();
+            // 3. EXPLOSÃO DE CORAÇÕES
+            for (let i = 0; i < 40; i++) {
+                animarCoracao();
             }
         }
 
-        function criarCoracao() {
+        function animarCoracao() {
             const h = document.createElement('div');
-            h.className = 'heart-particle';
-            h.innerHTML = '❤️' : '💜';
-            document.body.appendChild(h);
+            h.className = 'coracao-voando';
+            h.innerHTML = i % 2 === 0 ? '❤️' : '💜';
+            document.body.appendChild(c);
 
             const x = window.innerWidth / 2;
             const y = window.innerHeight / 2;
-            h.style.left = x + 'px';
-            h.style.top = y + 'px';
+            c.style.left = x + 'px';
+            c.style.top = y + 'px';
 
-            const angle = Math.random() * Math.PI * 2;
-            const velocity = 5 + Math.random() * 10;
-            let vx = Math.cos(angle) * velocity;
-            let vy = Math.sin(angle) * velocity;
-            let op = 1;
+            const angulo = Math.random() * Math.PI * 2;
+            const forca = 5 + Math.random() * 12;
+            let velX = Math.cos(angulo) * forca;
+            let velY = Math.sin(angulo) * forca;
+            let opacity = 1;
 
-            const move = setInterval(() => {
-                const rect = h.getBoundingClientRect();
-                h.style.left = (rect.left + vx) + 'px';
-                h.style.top = (rect.top + vy) + 'px';
-                vy += 0.5; // gravidade
-                op -= 0.02;
-                h.style.opacity = op;
-                if (op <= 0) { clearInterval(move); h.remove(); }
+            const loop = setInterval(() => {
+                const topo = parseFloat(c.style.top);
+                const esquerda = parseFloat(c.style.left);
+                c.style.top = (topo + velY) + 'px';
+                c.style.left = (esquerda + velX) + 'px';
+                velY += 0.4; // gravidade
+                opacity -= 0.02;
+                c.style.opacity = opacity;
+
+                if (opacity <= 0) {
+                    clearInterval(loop);
+                    c.remove();
+                }
             }, 20);
         }
     </script>
