@@ -6,28 +6,27 @@
     <title>Para o Meu Amor</title>
     <style>
         body { 
-            background-color: #e1bee7; /* Fundo Lilás */
+            background-color: #e1bee7; 
             font-family: 'Segoe UI', sans-serif; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             margin: 0; 
             padding: 20px;
-            overflow-x: hidden;
-            /* A&M PRETO E CORAÇÕES VERMELHOS ESPALHADOS */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext x='10' y='30' font-family='Arial' font-size='10' fill='black' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='50' y='70' font-family='Arial' font-size='10' fill='red'%3E❤️%3C/text%3E%3C/svg%3E");
+            /* FUNDO COM A&M E CORAÇÕES REPETIDOS */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Ctext x='10' y='30' font-family='Arial' font-size='10' fill='black' font-weight='bold'%3EA%26M%3C/text%3E%3Ctext x='45' y='65' font-family='Arial' font-size='10' fill='red'%3E❤️%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
         }
 
         .container { 
             max-width: 450px; 
             width: 100%; 
-            background: rgba(255, 255, 255, 0.96); 
+            background: rgba(255, 255, 255, 0.98); 
             padding: 25px; 
             border-radius: 30px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
             text-align: center; 
-            z-index: 10;
+            position: relative;
         }
 
         .polaroid { 
@@ -46,9 +45,6 @@
             display: block;
         }
 
-        h1 { color: #8e24aa; font-size: 24px; }
-        .contador { background: #f3e5f5; padding: 12px; border-radius: 15px; font-weight: bold; color: #7b1fa2; margin: 15px 0; }
-        
         .btn-abrir { 
             background: #9c27b0; 
             color: white; 
@@ -57,7 +53,7 @@
             border-radius: 50px; 
             width: 100%; 
             font-weight: bold; 
-            cursor: pointer; 
+            cursor: pointer;
             font-size: 1rem;
         }
 
@@ -74,59 +70,50 @@
 </head>
 <body>
 
-    <audio id="musica" loop>
-        <source src="https://www.myinstants.com/media/sounds/ainda-bem-vanessa-da-mata.mp3" type="audio/mpeg">
-        </audio>
-    <div id="player" style="display:none"></div>
+    <div id="player" style="position: absolute; top: -1000px;"></div>
 
     <div class="container">
         <div class="polaroid">
-            <img src="foto.jpg.jpeg" alt="Nossa Foto"> </div>
+            <img src="foto.jpg.jpeg" alt="Nossa Foto">
+        </div>
 
         <h1>Feliz 1 ano e 2 meses! ❤️</h1>
-        <div class="contador">Estamos juntos há <span id="dias"></span> dias!</div>
+        <p>Estamos juntos há <span id="dias"></span> dias!</p>
         
-        <p style="color: #666; font-size: 0.9rem;">Desde aquele Halloween de 2024, quando nos conhecemos, minha vida ficou completa com você, momo.</p>
+        <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">
+            Desde aquele Halloween de 2024, quando nos conhecemos, minha vida ficou completa com você, momo.
+        </p>
         
-        <button class="btn-abrir" onclick="ativarSurpresa()">Ver Surpresa do Dia</button>
+        <button class="btn-abrir" onclick="ativarSurpresa()">Ver Surpresa do Dia & Ouvir Música ❤️</button>
 
         <div id="mensagem-area"><p id="texto-mensagem"></p></div>
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        // Sistema de backup para a música
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '0', width: '0', videoId: '766mI2N-B2o',
-                events: { 'onReady': function(e) { e.target.setVolume(100); } }
+                playerVars: { 'autoplay': 0, 'controls': 0, 'enablejsapi': 1 }
             });
         }
 
         const dataInicio = new Date('2024-10-19');
-        const hoje = new Date();
-        document.getElementById('dias').innerText = Math.floor((hoje - dataInicio) / (1000 * 60 * 60 * 24));
+        document.getElementById('dias').innerText = Math.floor((new Date() - dataInicio) / (1000 * 60 * 60 * 24));
 
         function ativarSurpresa() {
-            // Tenta tocar o áudio direto primeiro (mais garantido)
-            const audio = document.getElementById('musica');
-            audio.play().catch(() => {
-                // Se falhar, tenta o YouTube
-                if(player && player.playVideo) { player.playVideo(); }
-            });
-
+            if(player && player.playVideo) { player.playVideo(); player.setVolume(100); }
+            
             const mensagens = [
-                "Didy e Teteu, Teteu e Didy ❤️",
+                "DIdy e Teteu, Teteu e Didy ❤️",
                 "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
                 "Obrigada por ser meu parceiro desde aquela primeira festa.",
-                "Cada dia com você me faz ter certeza que eu te escolheria mil vezes.",
                 "Ainda bem que te encontrei agora tenho você... ❤️",
                 "Você é o meu porto seguro, te amo demais!"
             ];
             
-            const random = Math.floor(Math.random() * mensagens.length);
-            document.getElementById('texto-mensagem').innerText = mensagens[random];
+            document.getElementById('texto-mensagem').innerText = mensagens[Math.floor(Math.random() * mensagens.length)];
             document.getElementById('mensagem-area').style.display = 'block';
         }
     </script>
