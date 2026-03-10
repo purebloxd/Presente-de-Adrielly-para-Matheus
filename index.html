@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Um Presente Para Você</title>
+    <style>
+        body {
+            background-color: #fff0f3;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #card-presente {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(255, 75, 110, 0.2);
+            text-align: center;
+            max-width: 400px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 { color: #ff4b6e; font-size: 24px; }
+        p { color: #666; line-height: 1.6; }
+
+        .btn-abrir {
+            background: #ff4b6e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-abrir:hover { background: #e6395b; transform: scale(1.05); }
+
+        #mensagem-area {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px dashed #ffcbd5;
+            border-radius: 15px;
+            background: #fffafa;
+            color: #ff4b6e;
+            font-style: italic;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Corações flutuantes */
+        .heart {
+            position: absolute;
+            color: #ff4b6e;
+            font-size: 20px;
+            animation: float 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="card-presente">
+    <div id="inicio">
+        <h1>🎁 Um presente que fala por mim...</h1>
+        <p>Programei mensagens especiais para você. <br> Clique abaixo para receber a de hoje!</p>
+        <button class="btn-abrir" onclick="gerarMensagem()">Abrir Mensagem do Dia</button>
+    </div>
+
+    <div id="mensagem-area">
+        <p id="texto-mensagem"></p>
+        <small id="data-hora" style="color: #999;"></small>
+    </div>
+</div>
+
+<script>
+    const mensagens = [
+        "Você é a razão do meu sorriso mais sincero. ❤️",
+        "Só passei para dizer que tenho muito orgulho de quem você é.",
+        "Que seu dia seja tão incrível quanto o nosso primeiro encontro! 🌹",
+        "Minha parte favorita do dia é quando estou com você.",
+        "Você é meu porto seguro. Te amo hoje e sempre! ✨",
+        "Sei que você vai arrasar em tudo o que fizer hoje. Estou torcendo por você!"
+    ];
+
+    function gerarMensagem() {
+        const random = Math.floor(Math.random() * mensagens.length);
+        document.getElementById('texto-mensagem').innerText = mensagens[random];
+        document.getElementById('mensagem-area').style.display = 'block';
+        document.getElementById('inicio').style.display = 'none';
+        
+        const agora = new Date();
+        document.getElementById('data-hora').innerText = "Enviado com amor em: " + agora.toLocaleDateString();
+        
+        criarCoracoes();
+    }
+
+    function criarCoracoes() {
+        for(let i=0; i<15; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }, i * 200);
+        }
+    }
+</script>
+
+</body>
+</html>
