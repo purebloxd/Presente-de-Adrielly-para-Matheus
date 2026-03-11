@@ -7,209 +7,184 @@
 <title>Nossa História ❤️</title>
 
 <style>
+/* Reset básico para evitar espaços em branco */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-text-align:center;
-overflow-x:hidden;
-color:#333;
-background:linear-gradient(270deg,#7b1fa2,#ce93d8,#90caf9,#f48fb1);
-background-size:800% 800%;
-animation:fundo 18s ease infinite;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    overflow-x: hidden;
+    background: #000; /* Começa preto para a surpresa */
+    color: #333;
+    min-height: 100vh;
 }
 
-@keyframes fundo{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
+/* O gradiente só aparece no fundo real do site */
+.bg-site {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(270deg, #7b1fa2, #ce93d8, #90caf9, #f48fb1);
+    background-size: 400% 400%;
+    animation: fundoAnim 15s ease infinite;
+    z-index: -2;
+    opacity: 0; /* Escondido no início */
+    transition: opacity 2s;
 }
 
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:1; /* Estrelas no fundo */
+@keyframes fundoAnim {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
 }
 
-.container{
-position: relative;
-z-index: 10; /* Conteúdo garantido na frente das estrelas */
-max-width:450px;
-margin:auto;
-padding:20px;
-background:white;
-border-radius:25px;
-box-shadow:0 10px 40px rgba(0,0,0,.3);
-margin-top:40px;
-display: block;
+canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+/* Conteúdo principal do site */
+.container {
+    max-width: 450px;
+    margin: 40px auto;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    opacity: 0; /* Escondido até abrir a carta */
+    transform: translateY(20px);
+    transition: all 2s;
 }
 
-img{
-width:100%;
-border-radius:12px;
+.visible { opacity: 1 !important; transform: translateY(0) !important; }
+
+/* Estilos de imagem e botões */
+img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
+.frase { font-style: italic; color: #7b1fa2; margin: 15px 0; }
+.btn {
+    background: linear-gradient(45deg, #ba68c8, #ec407a);
+    border: none; padding: 15px 30px; border-radius: 50px;
+    color: white; font-weight: bold; cursor: pointer;
 }
 
-.frase{
-margin-top:10px;
-font-style:italic;
-color:#7b1fa2;
+/* TELA DE BLOQUEIO (ENVELOPE) */
+.tela-inicial {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+    transition: opacity 1.5s;
 }
 
-.btn{
-background:linear-gradient(45deg,#ba68c8,#ec407a);
-border:none;
-padding:15px;
-border-radius:40px;
-color:white;
-font-size:16px;
-cursor:pointer;
-margin-top:15px;
+.envelope {
+    width: 300px; height: 200px;
+    background: #ec407a; border-radius: 15px;
+    position: relative; cursor: pointer;
 }
 
-#mensagem{
-margin-top:20px;
-display:none;
-font-weight:bold;
-color:#7b1fa2;
-min-height:40px;
+.tampa {
+    position: absolute; width: 100%; height: 100%;
+    background: #f06292; clip-path: polygon(0 0, 100% 0, 50% 60%);
+    transform-origin: top; transition: 1s; z-index: 3;
 }
 
-.carrossel{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
-margin:20px 0;
+.carta {
+    position: absolute; width: 260px; height: 140px;
+    background: white; top: 30px; left: 20px;
+    border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-weight: bold; color: #ec407a;
+    z-index: 2; transition: 1s;
 }
 
-.carrossel-container{
-width:250px;
-overflow:hidden;
-border-radius:12px;
-}
+.envelope.abrir .tampa { transform: rotateX(180deg); }
+.envelope.abrir .carta { transform: translateY(-150px); }
 
-.carrossel-track{
-display:flex;
-transition:transform .6s ease;
-}
-
-.carrossel-track img{
-width:250px;
-flex-shrink:0;
-}
-
-.timeline{
-margin-top:40px;
-}
-
-.timeline-item{
-margin-bottom:40px;
-}
-
-.timeline-item img{
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.3);
-}
-
-.data{
-font-weight:bold;
-color:#8e24aa;
-margin-top:10px;
-}
-
-/* TELA DE BLOQUEIO TOTAL - CORRIGIDA */
-.tela-inicial{
-position:fixed;
-top: 0;
-left: 0;
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#000000; 
-z-index:9999; /* Sempre no topo até ser removida */
-opacity: 1;
-transition: opacity 1.5s ease;
-}
-
-.envelope{
-width:320px; 
-height:220px; 
-background:#ec407a;
-border-radius:15px;
-position:relative;
-cursor:pointer;
-box-shadow: 0 0 50px rgba(236, 64, 122, 0.5);
-}
-
-.tampa{
-position:absolute;
-width:100%;
-height:100%;
-background:#f06292;
-clip-path:polygon(0 0,100% 0,50% 60%);
-transform-origin:top;
-transition:1s;
-z-index:3;
-}
-
-.carta{
-position:absolute;
-width:280px; 
-height:160px; 
-background:white;
-top:30px;
-left:20px;
-border-radius:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-font-size: 1.3rem;
-z-index:2;
-transition: 1.2s;
-color: #ec407a;
-}
-
-.envelope.abrir .tampa{
-transform:rotateX(180deg);
-}
-
-.envelope.abrir .carta{
-transform:translateY(-180px);
-}
-
+/* Timeline e Carrossel */
+.data { font-weight: bold; color: #8e24aa; margin-top: 5px; }
+.timeline-item { margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
 </style>
 </head>
 
 <body>
 
+<div class="bg-site" id="fundoSite"></div>
 <canvas id="space"></canvas>
 
 <div class="tela-inicial" id="tela">
-<div class="envelope" id="env" onclick="abrirCarta()">
-<div class="tampa"></div>
-<div class="carta">Clique para abrir 💌</div>
-</div>
+    <div class="envelope" id="env" onclick="abrirCarta()">
+        <div class="tampa"></div>
+        <div class="carta">Clique para abrir 💌</div>
+    </div>
 </div>
 
 <audio id="musica" loop>
-<source src="musica_tema.mp3" type="audio/mpeg">
+    <source src="musica_tema.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
-<h2>Feliz 1 ano e 2 meses ❤️</h2>
+<div class="container" id="conteudo">
+    <h2>Feliz 1 ano e 2 meses ❤️</h2>
+    <p>Estamos juntos há <span id="contador"></span></p>
+    
+    <p class="frase">"Desde o dia que te conheci, me senti mais completa."</p>
 
-<p>Estamos juntos há <span id="contador"></span></p>
+    <div class="timeline">
+        <div class="timeline-item">
+            <img src="fotos/foto.jpg">
+            <div class="data">19/10/2024</div>
+            <p>O dia em que nos conhecemos no Halloween</p>
+        </div>
+        </div>
+</div>
 
-<p class="frase">
-Desde o dia que te conheci, me senti mais completa.
-É um privilégio viver com você, te amo!
-</p>
+<script>
+// Ajustando a data correta do início (Outubro de 2024)
+const dataInicio = new Date(2024, 9, 19); 
 
-<div class="carrossel">
-<button onclick="voltar()">⬅</button>
-<div class="carrossel-container">
-<div class="carross
+function atualizarContador() {
+    const agora = new Date();
+    const diff = agora - dataInicio;
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    // Negrito Roxo solicitado
+    document.getElementById("contador").innerHTML = `<strong style="color:#7b1fa2;">${dias} dias</strong>`;
+}
+
+function abrirCarta() {
+    const env = document.getElementById("env");
+    env.classList.add("abrir");
+    
+    setTimeout(() => {
+        // Remove a tela preta e mostra o site
+        document.getElementById("tela").style.opacity = "0";
+        document.getElementById("fundoSite").style.opacity = "1";
+        document.getElementById("conteudo").classList.add("visible");
+        
+        setTimeout(() => {
+            document.getElementById("tela").style.display = "none";
+        }, 1500);
+        
+        document.getElementById("musica").play();
+    }, 1200);
+}
+
+setInterval(atualizarContador, 1000);
+atualizarContador();
+
+// Canvas das estrelas
+const canvas = document.getElementById("space");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let estrelas = [];
+for(let i=0; i<150; i++) {
+    estrelas.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5});
+}
+function animar() {
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    estrelas.forEach(e => {
+        ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI*2); ctx.fill();
+    });
+    requestAnimationFrame(animar);
+}
+animar();
+</script>
+
+</body>
+</html>
