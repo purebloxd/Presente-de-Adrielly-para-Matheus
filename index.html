@@ -10,19 +10,17 @@
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-color:#333;
 text-align:center;
 overflow-x:hidden;
-
-background:linear-gradient(270deg,#7b1fa2,#ce93d8,#90caf9,#f48fb1);
-background-size:800% 800%;
-animation:fundo 18s ease infinite;
+color:#333;
+background:radial-gradient(circle at center,#12002f,#000000);
 }
 
-@keyframes fundo{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
 .container{
@@ -31,7 +29,7 @@ margin:auto;
 padding:20px;
 background:white;
 border-radius:25px;
-box-shadow:0 10px 40px rgba(0,0,0,.3);
+box-shadow:0 10px 40px rgba(0,0,0,.4);
 margin-top:40px;
 }
 
@@ -70,25 +68,6 @@ margin:20px 0;
 width:250px;
 }
 
-.timeline{
-margin-top:40px;
-}
-
-.timeline-item{
-margin-bottom:40px;
-}
-
-.timeline-item img{
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.3);
-}
-
-.data{
-font-weight:bold;
-color:#8e24aa;
-margin-top:10px;
-}
-
 .tela-inicial{
 position:fixed;
 width:100%;
@@ -96,8 +75,7 @@ height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-background:rgba(0,0,0,.5);
+background:#000000aa;
 z-index:10;
 }
 
@@ -143,10 +121,30 @@ transform:rotateX(180deg);
 transform:translateY(-120px);
 }
 
+.coracao{
+position:fixed;
+font-size:20px;
+pointer-events:none;
+}
+
+.fundoCoracao{
+position:fixed;
+font-size:18px;
+opacity:0.5;
+animation:subir 12s linear infinite;
+}
+
+@keyframes subir{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-100vh);}
+}
+
 </style>
 </head>
 
 <body>
+
+<canvas id="espaco"></canvas>
 
 <div class="tela-inicial" id="tela">
 <div class="envelope" id="env">
@@ -167,7 +165,7 @@ transform:translateY(-120px);
 
 <div class="carrossel">
 <button onclick="voltar()">⬅</button>
-<img id="fotoCarrossel" src="foto.jpg">
+<img id="fotoCarrossel" src="fotos/foto.jpg">
 <button onclick="proxima()">➡</button>
 </div>
 
@@ -175,86 +173,38 @@ transform:translateY(-120px);
 
 <div id="mensagem"></div>
 
-<div class="timeline">
-
-<h2>Nossa História 💖</h2>
-
-<div class="timeline-item">
-<img src="foto.jpg">
-<div class="data">19/10/2024</div>
-<p>Nos conhecemos no Halloween</p>
-</div>
-
-<div class="timeline-item">
-<img src="foto1.jpg">
-<div class="data">08/12/2024</div>
-<p>Fomos juntos à praia pela primeira vez</p>
-</div>
-
-<div class="timeline-item">
-<img src="foto2.jpg">
-<div class="data">24/12/2024</div>
-<p>1° Natal juntos</p>
-</div>
-
-<div class="timeline-item">
-<img src="foto3.jpg">
-<div class="data">07/03/2025</div>
-<p>Nos eternizamos na pele</p>
-</div>
-
-<div class="timeline-item">
-<img src="foto4.jpg">
-<div class="data">21/04/2025</div>
-<p>Primeira viagem juntos</p>
-</div>
-
-<div class="timeline-item">
-<img src="foto5.jpg">
-<div class="data">26/04/2025</div>
-<p>Fingimos que iríamos casar pra conhecer o castelo</p>
-</div>
-
-<div class="timeline-item">
-<img src="foto6.jpg">
-<div class="data">01/11/2025</div>
-<p>Momento importante e feliz</p>
-</div>
-
-<div class="timeline-item">
-<img src="foto7.jpg">
-<div class="data">27/02/2026</div>
-<p>Nossa família feliz</p>
-</div>
-
-</div>
 </div>
 
 <script>
 
-const inicio = new Date("2024-10-19");
+/* contador */
+
+const inicio=new Date("2025-01-12");
 
 function atualizarContador(){
-const agora = new Date();
-const diff = agora - inicio;
-const dias = Math.floor(diff/(1000*60*60*24));
-document.getElementById("contador").innerHTML = dias + " dias";
+const agora=new Date();
+const diff=agora-inicio;
+const dias=Math.floor(diff/(1000*60*60*24));
+document.getElementById("contador").innerHTML=dias+" dias";
 }
 
 setInterval(atualizarContador,1000);
 atualizarContador();
 
-function abrirCarta(){
-const env = document.getElementById("env");
-const tela = document.getElementById("tela");
+/* envelope */
 
-env.classList.add("abrir");
+function abrirCarta(){
+
+document.getElementById("env").classList.add("abrir");
 
 setTimeout(()=>{
-tela.style.display="none";
+document.getElementById("tela").style.display="none";
 document.getElementById("musica").play();
 },1500);
+
 }
+
+/* carrossel */
 
 const fotos=[
 "foto.jpg",
@@ -271,17 +221,20 @@ let atual=0;
 
 function proxima(){
 atual++;
-if(atual>=fotos.length){atual=0;}
+if(atual>=fotos.length) atual=0;
 document.getElementById("fotoCarrossel").src=fotos[atual];
 }
 
 function voltar(){
 atual--;
-if(atual<0){atual=fotos.length-1;}
+if(atual<0) atual=fotos.length-1;
 document.getElementById("fotoCarrossel").src=fotos[atual];
 }
 
+/* frases */
+
 const frases=[
+
 "Didy e Teteu, Teteu e Didy ❤️",
 "Com você tudo fica mais bonito.",
 "Você é meu lugar favorito.",
@@ -304,29 +257,219 @@ const frases=[
 "Eu amo a vida que tenho com você.",
 "Obrigada por ser exatamente quem você é.",
 "Eu amo nós dois."
+
 ];
 
-function surpresa(){
-const frase=frases[Math.floor(Math.random()*frases.length)];
-const caixa=document.getElementById("mensagem");
-caixa.innerText=frase;
-caixa.style.display="block";
-}
+/* botão */
 
 const botao=document.getElementById("botao");
+
+botao.onclick=function(){
+
+const frase=frases[Math.floor(Math.random()*frases.length)];
+
+const caixa=document.getElementById("mensagem");
+
+caixa.innerText=frase;
+
+caixa.style.display="block";
+
+explodir();
+
+};
+
+/* frase secreta */
+
 let tempo;
 
-botao.onmousedown=()=>{
-tempo=setTimeout(()=>{
-document.getElementById("mensagem").innerText="💌 para sempre nós 💌";
-document.getElementById("mensagem").style.display="block";
+botao.onmousedown=function(){
+
+tempo=setTimeout(function(){
+
+const caixa=document.getElementById("mensagem");
+
+caixa.innerText="💌 Pra sempre nós!";
+
+caixa.style.display="block";
+
 },3000);
+
+};
+
+botao.onmouseup=function(){
+clearTimeout(tempo);
+};
+
+/* explosão de corações */
+
+function explodir(){
+
+for(let i=0;i<60;i++){
+
+const c=document.createElement("div");
+
+c.className="coracao";
+
+c.innerHTML=Math.random()>0.5?"💜":"❤️";
+
+document.body.appendChild(c);
+
+let x=window.innerWidth/2;
+let y=window.innerHeight/2;
+
+let vx=(Math.random()-0.5)*12;
+let vy=(Math.random()-0.5)*12;
+
+let op=1;
+
+const loop=setInterval(function(){
+
+x+=vx;
+y+=vy;
+
+vy+=0.3;
+
+op-=0.02;
+
+c.style.left=x+"px";
+c.style.top=y+"px";
+c.style.opacity=op;
+
+if(op<=0){
+
+clearInterval(loop);
+
+c.remove();
+
 }
 
-botao.onmouseup=()=>{
-clearTimeout(tempo);
-surpresa();
+},25);
+
 }
+
+}
+
+/* galáxia */
+
+const canvas=document.getElementById("espaco");
+
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let estrelas=[];
+
+for(let i=0;i<200;i++){
+
+estrelas.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+
+});
+
+}
+
+function animar(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+
+for(let i=0;i<estrelas.length;i++){
+
+let e=estrelas[i];
+
+ctx.beginPath();
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.fill();
+
+}
+
+requestAnimationFrame(animar);
+
+}
+
+animar();
+
+/* estrelas cadentes */
+
+setInterval(function(){
+
+const estrela=document.createElement("div");
+
+estrela.innerHTML="✨";
+
+estrela.style.position="fixed";
+estrela.style.left=Math.random()*window.innerWidth+"px";
+estrela.style.top="-20px";
+estrela.style.fontSize="20px";
+
+document.body.appendChild(estrela);
+
+let y=0;
+
+const queda=setInterval(function(){
+
+y+=15;
+
+estrela.style.top=y+"px";
+
+if(y>window.innerHeight){
+
+clearInterval(queda);
+
+estrela.remove();
+
+}
+
+},30);
+
+},4000);
+
+/* corações no fundo */
+
+setInterval(function(){
+
+const c=document.createElement("div");
+
+c.className="fundoCoracao";
+
+c.innerHTML=Math.random()>0.5?"💜":"❤️";
+
+c.style.left=Math.random()*window.innerWidth+"px";
+
+document.body.appendChild(c);
+
+setTimeout(function(){
+
+c.remove();
+
+},12000);
+
+},1200);
+
+/* texto no céu */
+
+setTimeout(function(){
+
+const texto=document.createElement("div");
+
+texto.innerHTML="Didy ❤️ Teteu";
+
+texto.style.position="fixed";
+texto.style.top="20%";
+texto.style.left="50%";
+texto.style.transform="translateX(-50%)";
+texto.style.fontSize="40px";
+texto.style.color="white";
+texto.style.opacity="0.8";
+
+document.body.appendChild(texto);
+
+},6000);
 
 </script>
 
