@@ -16,15 +16,23 @@ align-items:center;
 min-height:100vh;
 overflow-x:hidden;
 
-background:linear-gradient(-45deg,#e1bee7,#ce93d8,#ba68c8,#ab47bc);
-background-size:400% 400%;
-animation:fundo 12s ease infinite;
+background:linear-gradient(
+270deg,
+#f3e5f5,
+#e1bee7,
+#ce93d8,
+#ba68c8,
+#ab47bc
+);
+
+background-size:1000% 1000%;
+animation:gradiente 20s ease infinite;
 }
 
-@keyframes fundo{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+@keyframes gradiente{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
 .container{
@@ -55,25 +63,32 @@ object-fit:cover;
 }
 
 .btn{
-background:#9c27b0;
+
+background:linear-gradient(45deg,#ba68c8,#9c27b0);
 color:white;
 border:none;
 padding:16px;
-border-radius:50px;
+border-radius:40px;
 width:100%;
 font-weight:bold;
 cursor:pointer;
 font-size:1.1rem;
-transition:.25s;
-box-shadow:0 4px 15px rgba(156,39,176,0.4);
+
+box-shadow:0 5px 20px rgba(156,39,176,0.5);
+
+transition:all .3s;
+
 }
 
 .btn:hover{
-transform:scale(1.05);
-box-shadow:0 8px 25px rgba(156,39,176,0.6);
+
+transform:scale(1.08) rotate(-1deg);
+box-shadow:0 10px 30px rgba(156,39,176,0.7);
+
 }
 
 #mensagem{
+
 display:none;
 margin-top:20px;
 padding:15px;
@@ -81,16 +96,20 @@ background:#fdf7ff;
 border-radius:15px;
 border:1px solid #e1bee7;
 color:#7b1fa2;
+
 }
 
 .coracao{
+
 position:fixed;
 font-size:22px;
 pointer-events:none;
 z-index:1;
+
 }
 
 .tela-inicial{
+
 position:fixed;
 top:0;
 left:0;
@@ -103,6 +122,7 @@ align-items:center;
 flex-direction:column;
 color:white;
 z-index:10;
+
 }
 
 </style>
@@ -111,8 +131,10 @@ z-index:10;
 <body>
 
 <div class="tela-inicial" id="tela">
+
 <h1>💌 Uma surpresa pra você</h1>
 <button class="btn" onclick="abrirSite()">Abrir</button>
+
 </div>
 
 <audio id="musica" preload="auto" loop>
@@ -128,7 +150,8 @@ z-index:10;
 <h2 style="color:#8e24aa">Feliz 1 ano e 2 meses ❤️</h2>
 
 <p style="font-weight:bold;color:#7b1fa2">
-Estamos juntos há <span id="dias"></span> dias
+Estamos juntos há<br>
+<span id="contador"></span>
 </p>
 
 <p style="color:#555">
@@ -144,18 +167,69 @@ minha vida ficou completa com você.
 
 <script>
 
-const inicio=new Date("2025-01-12");
-const hoje=new Date();
+const inicio=new Date("2025-01-12T00:00:00");
 
-const dias=Math.floor((hoje-inicio)/(1000*60*60*24));
-document.getElementById("dias").innerText=dias;
+function atualizarContador(){
+
+const agora=new Date();
+
+let anos=agora.getFullYear()-inicio.getFullYear();
+let meses=agora.getMonth()-inicio.getMonth();
+let dias=agora.getDate()-inicio.getDate();
+
+if(dias<0){
+meses--;
+dias+=30;
+}
+
+if(meses<0){
+anos--;
+meses+=12;
+}
+
+const diff=agora-inicio;
+const horas=Math.floor(diff/(1000*60*60));
+
+document.getElementById("contador").innerHTML=
+`${anos} ano(s)<br>
+${meses} mês(es)<br>
+${dias} dia(s)<br>
+${horas} horas juntos ❤️`;
+
+}
+
+setInterval(atualizarContador,1000);
+atualizarContador();
 
 const frases=[
+
 "Didy e Teteu, Teteu e Didy ❤️",
 "1 ano e 2 meses sendo o casal mais incrível do mundo.",
 "Obrigada por ser meu parceiro desde aquela festa.",
 "Ainda bem que te encontrei agora tenho você ❤️",
 "Você é meu porto seguro."
+"Com você até os dias comuns viram especiais.",
+"Se eu pudesse escolher de novo, escolheria você mil vezes.",
+"Nosso amor é minha parte favorita da vida.",
+"Amar você é a coisa mais fácil que já fiz.",
+"Obrigada por fazer minha vida mais feliz.",
+"Nosso amor é a minha história favorita.",
+"Você transforma qualquer momento em memória.",
+"Eu escolheria você em todas as vidas.",
+"Nosso amor é a melhor coincidência da minha vida.",
+"Você é meu sorriso favorito.",
+"Meu coração sempre encontra o seu.",
+"Te amar é minha coisa preferida.",
+"Você é a melhor parte dos meus dias.",
+"Com você tudo faz sentido.",
+"Meu mundo ficou mais bonito depois que você chegou.",
+"Você é minha pessoa favorita.",
+"Nosso amor merece mil comemorações.",
+"Eu amo a vida que tenho com você.",
+"Obrigada por ser exatamente quem você é.",
+"Cada segundo com você vale a pena.",
+"Eu amo ser nós dois."
+
 ];
 
 function abrirSite(){
@@ -179,9 +253,58 @@ caixa.innerText=frase;
 
 caixa.style.display="block";
 
-for(let i=0;i<40;i++){
+explodirAmor();
 
-criarCoracao();
+}
+
+function explodirAmor(){
+
+for(let i=0;i<60;i++){
+
+const coracao=document.createElement("div");
+
+coracao.innerHTML=Math.random()>0.5?"❤️":"💜";
+
+coracao.style.position="fixed";
+coracao.style.left="50%";
+coracao.style.top="50%";
+coracao.style.fontSize="24px";
+coracao.style.pointerEvents="none";
+
+document.body.appendChild(coracao);
+
+let angulo=Math.random()*Math.PI*2;
+let velocidade=5+Math.random()*12;
+
+let vx=Math.cos(angulo)*velocidade;
+let vy=Math.sin(angulo)*velocidade;
+
+let x=window.innerWidth/2;
+let y=window.innerHeight/2;
+
+let op=1;
+
+const loop=setInterval(()=>{
+
+x+=vx;
+y+=vy;
+
+vy+=0.3;
+
+op-=0.02;
+
+coracao.style.left=x+"px";
+coracao.style.top=y+"px";
+coracao.style.opacity=op;
+
+if(op<=0){
+
+clearInterval(loop);
+coracao.remove();
+
+}
+
+},25);
 
 }
 
@@ -197,34 +320,21 @@ h.innerHTML=Math.random()>0.5?"❤️":"💜";
 
 document.body.appendChild(h);
 
-let x=window.innerWidth/2;
-let y=window.innerHeight/2;
+let x=Math.random()*window.innerWidth;
+let y=-20;
 
 h.style.left=x+"px";
 h.style.top=y+"px";
 
-let angulo=Math.random()*Math.PI*2;
-let velocidade=5+Math.random()*10;
-
-let vx=Math.cos(angulo)*velocidade;
-let vy=Math.sin(angulo)*velocidade;
-
-let op=1;
+let vel=2+Math.random()*3;
 
 const loop=setInterval(()=>{
 
-x+=vx;
-y+=vy;
+y+=vel;
 
-vy+=0.4;
-
-op-=0.02;
-
-h.style.left=x+"px";
 h.style.top=y+"px";
-h.style.opacity=op;
 
-if(op<=0){
+if(y>window.innerHeight){
 
 clearInterval(loop);
 h.remove();
