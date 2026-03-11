@@ -116,6 +116,7 @@ color:#8e24aa;
 margin-top:10px;
 }
 
+/* ENVELOPE MAIOR */
 .tela-inicial{
 position:fixed;
 width:100%;
@@ -123,15 +124,15 @@ height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#00000088;
+background:#000000bb;
 z-index:10;
 }
 
 .envelope{
-width:220px;
-height:140px;
+width:300px; /* Aumentado */
+height:200px; /* Aumentado */
 background:#ec407a;
-border-radius:10px;
+border-radius:15px;
 position:relative;
 cursor:pointer;
 }
@@ -144,21 +145,25 @@ background:#f06292;
 clip-path:polygon(0 0,100% 0,50% 60%);
 transform-origin:top;
 transition:1s;
+z-index:3;
 }
 
 .carta{
 position:absolute;
-width:180px;
-height:100px;
+width:260px; /* Ajustado para o envelope maior */
+height:140px; /* Ajustado para o envelope maior */
 background:white;
-top:40px;
+top:30px;
 left:20px;
-border-radius:6px;
+border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center;
 font-weight:bold;
+font-size: 1.2rem;
 cursor:pointer;
+z-index:2;
+transition: 1s;
 }
 
 .envelope.abrir .tampa{
@@ -166,7 +171,7 @@ transform:rotateX(180deg);
 }
 
 .envelope.abrir .carta{
-transform:translateY(-120px);
+transform:translateY(-150px);
 }
 
 </style>
@@ -290,7 +295,6 @@ function atualizarContador(){
 const agora=new Date();
 const diff=agora-inicio;
 const dias=Math.floor(diff/(1000*60*60*24));
-// Negrito Roxo configurado aqui:
 document.getElementById("contador").innerHTML="<strong style='color:#7b1fa2;'>"+dias+" dias</strong>";
 }
 
