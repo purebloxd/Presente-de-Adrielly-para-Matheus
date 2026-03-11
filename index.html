@@ -124,8 +124,8 @@ height:100%;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#000000; /* Preto sólido para cobrir tudo */
-z-index:999; /* Garante que fique por cima de tudo */
+background:#000000; 
+z-index:999; 
 }
 
 .envelope{
@@ -146,7 +146,7 @@ background:#f06292;
 clip-path:polygon(0 0,100% 0,50% 60%);
 transform-origin:top;
 transition:1s;
-z-index:3;
+z-index:1; /* Tampa por baixo para não travar o clique */
 }
 
 .carta{
@@ -162,121 +162,9 @@ align-items:center;
 justify-content:center;
 font-weight:bold;
 font-size: 1.3rem;
-cursor:pointer;
-z-index:2;
+z-index:2; /* Carta por cima para ser clicável */
 transition: 1.2s;
 color: #ec407a;
 }
 
-.envelope.abrir .tampa{
-transform:rotateX(180deg);
-}
-
-.envelope.abrir .carta{
-transform:translateY(-180px);
-}
-
-</style>
-</head>
-
-<body>
-
-<canvas id="space"></canvas>
-
-<div class="tela-inicial" id="tela">
-<div class="envelope" id="env">
-<div class="tampa"></div>
-<div class="carta" onclick="abrirCarta()">Clique para abrir 💌</div>
-</div>
-</div>
-
-<audio id="musica" loop>
-<source src="musica_tema.mp3" type="audio/mpeg">
-</audio>
-
-<div class="container">
-
-<h2>Feliz 1 ano e 2 meses ❤️</h2>
-
-<p>Estamos juntos há <span id="contador"></span></p>
-
-<p class="frase">
-Desde o dia que te conheci, me senti mais completa.
-É um privilégio viver com você, te amo!
-</p>
-
-<div class="carrossel">
-
-<button onclick="voltar()">⬅</button>
-
-<div class="carrossel-container">
-<div class="carrossel-track" id="track">
-
-<img src="fotos/foto.jpg">
-<img src="fotos/foto1.jpg">
-<img src="fotos/foto2.jpg">
-<img src="fotos/foto3.jpg">
-<img src="fotos/foto4.jpg">
-<img src="fotos/foto5.jpg">
-<img src="fotos/foto6.jpg">
-<img src="fotos/foto7.jpg">
-
-</div>
-</div>
-
-<button onclick="proxima()">➡</button>
-
-</div>
-
-<button class="btn" id="botao">Ver surpresa ❤️</button>
-
-<div id="mensagem"></div>
-
-<div class="timeline">
-
-<h2>Nossa História 💖</h2>
-
-<div class="timeline-item">
-<img src="fotos/foto.jpg">
-<div class="data">19/10/2024</div>
-<p>Nos conhecemos no Halloween</p>
-</div>
-
-<div class="timeline-item">
-<img src="fotos/foto1.jpg">
-<div class="data">08/12/2024</div>
-<p>Fomos juntos à praia pela primeira vez</p>
-</div>
-
-<div class="timeline-item">
-<img src="fotos/foto2.jpg">
-<div class="data">24/12/2024</div>
-<p>1° Natal juntos</p>
-</div>
-
-<div class="timeline-item">
-<img src="fotos/foto3.jpg">
-<div class="data">07/03/2025</div>
-<p>Nos eternizamos na pele</p>
-</div>
-
-<div class="timeline-item">
-<img src="fotos/foto4.jpg">
-<div class="data">21/04/2025</div>
-<p>Primeira viagem juntos</p>
-</div>
-
-<div class="timeline-item">
-<img src="fotos/foto5.jpg">
-<div class="data">26/04/2025</div>
-<p>Fingimos que iríamos casar pra conhecer o castelo</p>
-</div>
-
-<div class="timeline-item">
-<img src="fotos/foto6.jpg">
-<div class="data">01/11/2025</div>
-<p>Momento importante e feliz</p>
-</div>
-
-<div class="timeline-item">
-<img src="fotos/foto7.
+.
