@@ -215,7 +215,17 @@ animation: flutuarBalao 10s ease-in-out infinite;
 pointer-events: none; /* Não atrapalha cliques */
 }
 
-
+/* Ponta do balão */
+.balao::after {
+content: '';
+position: absolute;
+bottom: -10px;
+left: 50%;
+transform: translateX(-50%);
+border-width: 10px 10px 0;
+border-style: solid;
+border-color: rgba(255, 255, 255, 0.8) transparent transparent;
+}
 
 @keyframes flutuarBalao {
 0% { top: 80%; left: 10%; transform: rotate(-5deg); opacity: 0; }
