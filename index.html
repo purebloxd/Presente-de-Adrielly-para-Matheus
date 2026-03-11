@@ -288,4 +288,251 @@ Desde o dia que te conheci, me senti mais completa.
 
 <div class="timeline-item">
 <img src="fotos/foto4.jpg">
-<div class="data">21
+<div class="data">21/04/2025</div>
+<p>Primeira viagem juntos</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto5.jpg">
+<div class="data">26/04/2025</div>
+<p>Fingimos que iríamos casar pra conhecer o castelo</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto6.jpg">
+<div class="data">01/11/2025</div>
+<p>Momento importante e feliz</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto7.jpg">
+<div class="data">27/02/2026</div>
+<p>Nossa família feliz</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* CONTADOR CORRETO */
+const inicio=new Date(2025,0,12);
+
+function atualizarContador(){
+const agora=new Date();
+const diff=agora-inicio;
+const dias=Math.floor(diff/(1000*60*60*24));
+document.getElementById("contador").innerHTML="<strong style='color:#7b1fa2;'>"+dias+" dias</strong>";
+}
+
+setInterval(atualizarContador,1000);
+atualizarContador();
+
+/* ENVELOPE MODIFICADO */
+function abrirCarta(){
+document.getElementById("env").classList.add("abrir");
+setTimeout(()=>{
+// Efeito de sumir suave
+document.getElementById("tela").style.opacity="0";
+setTimeout(() => {
+    document.getElementById("tela").style.display="none";
+    document.getElementById("musica").play();
+}, 1000);
+},1800);
+}
+
+/* CARROSSEL */
+let atual=0;
+const track=document.getElementById("track");
+const total=8;
+
+function atualizarCarrossel(){
+track.style.transform="translateX(-"+(atual*250)+"px)";
+}
+
+function proxima(){
+atual++;
+if(atual>=total) atual=0;
+atualizarCarrossel();
+}
+
+function voltar(){
+atual--;
+if(atual<0) atual=total-1;
+atualizarCarrossel();
+}
+
+/* FRASES */
+const frases=[
+"Didy e Teteu, Teteu e Didy ❤️",
+"Com você tudo fica mais bonito.",
+"Você é meu lugar favorito.",
+"Eu escolheria você mil vezes.",
+"Nosso amor é minha parte favorita.",
+"Você é minha pessoa favorita.",
+"Cada segundo com você vale a pena.",
+"Nosso amor é minha parte favorita da vida.",
+"Amar você é a coisa mais fácil que já fiz.",
+"Obrigada por fazer minha vida mais feliz.",
+"Você transforma qualquer momento em memória.",
+"Eu escolheria você em todas as vidas.",
+"Nosso amor é a melhor coincidência da minha vida.",
+"Você é meu sorriso favorito.",
+"Meu coração sempre encontra o seu.",
+"Você é a melhor parte dos meus dias.",
+"Com você tudo faz sentido.",
+"Meu mundo ficou mais bonito depois que você chegou.",
+"Nosso amor merece mil comemorações.",
+"Eu amo a vida que tenho com você.",
+"Obrigada por ser exatamente quem você é.",
+"Eu amo nós dois."
+];
+
+/* TEXTO DIGITANDO SEM EMBARALHAR */
+let intervaloAtivo = null;
+
+function digitarTexto(texto,elemento){
+clearInterval(intervaloAtivo); 
+elemento.innerHTML="";
+let i=0;
+intervaloAtivo=setInterval(()=>{
+elemento.innerHTML+=texto.charAt(i);
+i++;
+if(i>=texto.length){
+clearInterval(intervaloAtivo);
+}
+},40);
+}
+
+/* EXPLOSÃO CORAÇÕES */
+function explosao(){
+for(let i=0;i<25;i++){
+const c=document.createElement("div");
+c.innerHTML=Math.random()>0.5?"💜":"❤️";
+c.style.position="fixed";
+c.style.left=window.innerWidth/2+"px";
+c.style.top=window.innerHeight/2+"px";
+c.style.fontSize="24px";
+c.style.pointerEvents="none";
+document.body.appendChild(c);
+
+let x=(Math.random()-0.5)*600;
+let y=(Math.random()-0.5)*600;
+
+c.animate([
+{transform:"translate(0,0)",opacity:1},
+{transform:`translate(${x}px,${y}px)`,opacity:0}
+],{duration:1200});
+
+setTimeout(()=>c.remove(),1200);
+}
+}
+
+const botao=document.getElementById("botao");
+let tempo;
+
+botao.onmousedown=()=>{
+tempo=setTimeout(()=>{
+const caixa=document.getElementById("mensagem");
+caixa.style.display="block";
+digitarTexto("Pra sempre nós! ❤️",caixa);
+},3000);
+}
+
+botao.onmouseup=()=>{
+clearTimeout(tempo);
+explosao();
+const frase=frases[Math.floor(Math.random()*frases.length)];
+const caixa=document.getElementById("mensagem");
+caixa.style.display="block";
+digitarTexto(frase,caixa);
+}
+
+/* FUNDO ESPACIAL */
+const canvas=document.getElementById("space");
+const ctx=canvas.getContext("2d");
+function resize() {
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+}
+window.onresize = resize;
+resize();
+
+let estrelas=[];
+for(let i=0;i<300;i++){
+estrelas.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5
+});
+}
+
+function animar(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+for(let i=0;i<estrelas.length;i++){
+let e=estrelas[i];
+ctx.beginPath();
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+for(let j=i+1;j<estrelas.length;j++){
+let e2=estrelas[j];
+let dist=Math.hypot(e.x-e2.x,e.y-e2.y);
+if(dist<90){
+ctx.strokeStyle="rgba(255,255,255,0.1)";
+ctx.beginPath();
+ctx.moveTo(e.x,e.y);
+ctx.lineTo(e2.x,e2.y);
+ctx.stroke();
+}
+}
+}
+requestAnimationFrame(animar);
+}
+animar();
+
+/* ESTRELAS CAINDO */
+setInterval(()=>{
+const estrela=document.createElement("div");
+estrela.innerHTML="✨";
+estrela.style.position="fixed";
+estrela.style.left=Math.random()*window.innerWidth+"px";
+estrela.style.top="-20px";
+estrela.style.zIndex="100";
+document.body.appendChild(estrela);
+let y=0;
+const queda=setInterval(()=>{
+y+=20;
+estrela.style.top=y+"px";
+if(y>window.innerHeight){
+clearInterval(queda);
+estrela.remove();
+}
+},30);
+},1500);
+
+/* CORAÇÕES CAINDO */
+setInterval(()=>{
+const c=document.createElement("div");
+c.innerHTML=Math.random()>0.5?"💜":"❤️";
+c.style.position="fixed";
+c.style.left=Math.random()*window.innerWidth+"px";
+c.style.top="-20px";
+c.style.zIndex="100";
+document.body.appendChild(c);
+let y=0;
+const queda=setInterval(()=>{
+y+=10;
+c.style.top=y+"px";
+if(y>window.innerHeight){
+clearInterval(queda);
+c.remove();
+}
+},40);
+},900);
+
+</script>
+
+</body>
+</html>
