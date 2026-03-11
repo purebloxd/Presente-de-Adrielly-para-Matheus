@@ -59,7 +59,7 @@ canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
 .frase { font-style: italic; color: #7b1fa2; margin: 15px 0; }
 
-/* ENVELOPE TOTALMENTE ROXO E MISTERIOSO */
+/* DESIGN DO ENVELOPE TOTALMENTE ROXO */
 .tela-inicial {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -79,23 +79,23 @@ img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
 .envelope {
     width: 100%;
     height: 100%;
-    background: #7b1fa2; /* Roxo principal */
+    background: #7b1fa2; /* Roxo sólido */
     border-radius: 0 0 15px 15px;
     position: relative;
     cursor: pointer;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    overflow: hidden; /* Garante que a carta não apareça antes da hora */
+    overflow: hidden; /* Mantém a carta escondida dentro */
 }
 
-/* Corpo do envelope (parte da frente) */
+/* Parte da frente do envelope para esconder a carta */
 .envelope::before {
     content: '';
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: #6a1b9a; /* Roxo levemente mais escuro para contraste */
-    clip-path: polygon(0 40%, 50% 100%, 100% 40%, 100% 100%, 0 100%);
-    z-index: 4; /* Fica na frente da carta */
+    background: #6a1b9a; /* Roxo escuro */
+    clip-path: polygon(0 35%, 50% 100%, 100% 35%, 100% 100%, 0 100%);
+    z-index: 3;
 }
 
 .tampa {
@@ -106,7 +106,7 @@ img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     transform-origin: top;
     transition: transform 0.8s ease;
-    z-index: 5; /* Cobre tudo no início */
+    z-index: 4; /* Fica por cima de tudo no início */
     border-radius: 15px 15px 0 0;
 }
 
@@ -115,7 +115,7 @@ img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
     width: 280px;
     height: 160px;
     background: #fff;
-    top: 30px; /* Começa escondida dentro do envelope */
+    top: 30px; /* Escondida atrás da tampa e frente roxa */
     left: 20px;
     border-radius: 8px;
     display: flex;
@@ -123,29 +123,29 @@ img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
     align-items: center;
     justify-content: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 2; /* Atrás da tampa e do corpo do envelope */
+    z-index: 2;
     transition: transform 1s ease;
 }
 
 .carta p {
-    color: #7b1fa2;
+    color: #7b1fa2; /* Texto roxo na carta */
     font-weight: bold;
     font-size: 1.2rem;
 }
 
 /* Animação de Abrir */
 .envelope.abrir {
-    overflow: visible; /* Permite que a carta saia do envelope */
+    overflow: visible; /* Deixa a carta sair */
 }
 
 .envelope.abrir .tampa {
     transform: rotateX(180deg);
-    z-index: 1; /* Move para trás ao abrir */
+    z-index: 1; /* Vai para trás */
 }
 
 .envelope.abrir .carta {
-    transform: translateY(-160px);
-    z-index: 6; /* Sobe para frente de tudo */
+    transform: translateY(-150px);
+    z-index: 5; /* Sobe para frente de tudo */
 }
 
 /* Estilos Adicionais */
@@ -212,6 +212,7 @@ img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
 </div>
 
 <script>
+// Data do Halloween 2024
 const dataInicio = new Date(2024, 9, 19); 
 
 function atualizarContador() {
@@ -235,12 +236,13 @@ function abrirCarta() {
         }, 1500);
         
         document.getElementById("musica").play();
-    }, 1800); // Aumentei um pouco o tempo para ele ver a carta subindo
+    }, 1200);
 }
 
 setInterval(atualizarContador, 1000);
 atualizarContador();
 
+// Canvas Estelar
 const canvas = document.getElementById("space");
 const ctx = canvas.getContext("2d");
 function resize() {
@@ -265,6 +267,7 @@ function animar() {
 }
 animar();
 
+// Lógica da Surpresa
 const frases = ["Didy e Teteu, Teteu e Didy ❤️", "Você é minha pessoa favorita.", "Obrigada por tudo!"];
 const botao = document.getElementById("botao");
 const caixaMsg = document.getElementById("mensagem");
