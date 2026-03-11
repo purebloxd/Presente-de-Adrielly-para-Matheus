@@ -15,10 +15,11 @@ body {
     text-align: center;
     overflow-x: hidden;
     background: #000;
+    color: #333;
     min-height: 100vh;
 }
 
-/* Fundo do Site */
+/* Fundo do Site (Gradiente Animado) */
 .bg-site {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -38,7 +39,7 @@ body {
 
 canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
-/* Container do Conteúdo */
+/* Container Principal */
 .container {
     max-width: 450px;
     margin: 40px auto;
@@ -55,7 +56,10 @@ canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
 .visible { opacity: 1 !important; transform: translateY(0) !important; }
 
-/* TELA DE BLOQUEIO COM ENVELOPE ROXO MISTERIOSO */
+img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
+.frase { font-style: italic; color: #7b1fa2; margin: 15px 0; }
+
+/* ENVELOPE TOTALMENTE ROXO E MISTERIOSO */
 .tela-inicial {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -65,62 +69,96 @@ canvas { position: fixed; top: 0; left: 0; z-index: -1; }
     transition: opacity 1.5s;
 }
 
-.envelope {
+.envelope-wrapper {
     position: relative;
-    width: 300px;
-    height: 200px;
-    background: #7b1fa2; /* Roxo sólido */
-    border-radius: 0 0 15px 15px;
-    cursor: pointer;
-    box-shadow: 0 15px 35px rgba(123, 31, 162, 0.4);
+    width: 320px;
+    height: 220px;
+    perspective: 1000px;
 }
 
-/* Tampa do envelope (fechada por cima de tudo) */
-.tampa {
+.envelope {
+    width: 100%;
+    height: 100%;
+    background: #7b1fa2; /* Roxo principal */
+    border-radius: 0 0 15px 15px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    overflow: hidden; /* Garante que a carta não apareça antes da hora */
+}
+
+/* Corpo do envelope (parte da frente) */
+.envelope::before {
+    content: '';
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: #8e24aa;
-    clip-path: polygon(0 0, 100% 0, 50% 60%);
+    background: #6a1b9a; /* Roxo levemente mais escuro para contraste */
+    clip-path: polygon(0 40%, 50% 100%, 100% 40%, 100% 100%, 0 100%);
+    z-index: 4; /* Fica na frente da carta */
+}
+
+.tampa {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 120px;
+    background: #8e24aa; /* Roxo da tampa */
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
     transform-origin: top;
     transition: transform 0.8s ease;
-    z-index: 3; /* Garante que cubra a carta */
+    z-index: 5; /* Cobre tudo no início */
     border-radius: 15px 15px 0 0;
 }
 
-/* A carta que fica escondida atrás da tampa */
 .carta {
     position: absolute;
-    width: 260px;
-    height: 140px;
-    background: white;
-    top: 20px;
+    width: 280px;
+    height: 160px;
+    background: #fff;
+    top: 30px; /* Começa escondida dentro do envelope */
     left: 20px;
     border-radius: 8px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    color: #7b1fa2;
-    z-index: 2; /* Fica atrás da tampa (z-index 3) */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 2; /* Atrás da tampa e do corpo do envelope */
     transition: transform 1s ease;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* Efeito ao clicar/abrir */
+.carta p {
+    color: #7b1fa2;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Animação de Abrir */
+.envelope.abrir {
+    overflow: visible; /* Permite que a carta saia do envelope */
+}
+
 .envelope.abrir .tampa {
     transform: rotateX(180deg);
+    z-index: 1; /* Move para trás ao abrir */
 }
 
 .envelope.abrir .carta {
-    transform: translateY(-130px);
-    z-index: 4; /* Sobe para frente de tudo após abrir */
+    transform: translateY(-160px);
+    z-index: 6; /* Sobe para frente de tudo */
 }
 
-/* Estilos do Site */
-img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
-.data { font-weight: bold; color: #8e24aa; display: block; margin-top: 5px; }
-.timeline-item { margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+/* Estilos Adicionais */
+.btn {
+    background: linear-gradient(45deg, #ba68c8, #ec407a);
+    border: none; padding: 15px 30px; border-radius: 50px;
+    color: white; font-weight: bold; cursor: pointer;
+    margin-top: 15px;
+}
+
+#contador { font-size: 1.2rem; }
+.timeline-item { margin-top: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+.data { font-weight: bold; color: #8e24aa; margin-top: 10px; display: block; }
 </style>
 </head>
 
@@ -130,9 +168,14 @@ img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
 <canvas id="space"></canvas>
 
 <div class="tela-inicial" id="tela">
-    <div class="envelope" id="env" onclick="abrirCarta()">
-        <div class="tampa"></div>
-        <div class="carta">Abra aqui 💌</div>
+    <div class="envelope-wrapper">
+        <div class="envelope" id="env" onclick="abrirCarta()">
+            <div class="tampa"></div>
+            <div class="carta">
+                <p>Abra com carinho 💌</p>
+                <span style="font-size: 0.8rem; color: #999;">Para: Teteu</span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -144,22 +187,28 @@ img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
     <h2>Feliz 1 ano e 2 meses ❤️</h2>
     <p>Estamos juntos há <span id="contador"></span></p>
     
-    <p style="margin: 15px 0; color: #7b1fa2; font-style: italic;">
-        "Desde o dia que te conheci, me senti mais completa. É um privilégio viver com você, te amo!"
-    </p>
+    <p class="frase">"Desde o dia que te conheci, me senti mais completa. É um privilégio viver com você, te amo!"</p>
 
     <div class="timeline">
         <div class="timeline-item">
             <img src="fotos/foto.jpg">
             <span class="data">19/10/2024</span>
-            <p>O dia em que nos conhecemos (Halloween) 🎃</p>
+            <p>Nos conhecemos no Halloween 🎃</p>
         </div>
         <div class="timeline-item">
             <img src="fotos/foto3.jpg">
             <span class="data">07/03/2025</span>
-            <p>Tatuagem juntos 💜</p>
+            <p>Nos eternizamos na pele 💜</p>
+        </div>
+        <div class="timeline-item">
+            <img src="fotos/foto5.jpg">
+            <span class="data">26/04/2025</span>
+            <p>Conhecendo o castelo 🏰</p>
         </div>
     </div>
+
+    <button class="btn" id="botao">Ver surpresa ❤️</button>
+    <div id="mensagem" style="margin-top:20px; font-weight:bold; color:#7b1fa2; display:none;"></div>
 </div>
 
 <script>
@@ -176,7 +225,6 @@ function abrirCarta() {
     const env = document.getElementById("env");
     env.classList.add("abrir");
     
-    // Pequeno atraso para o Matheus ver a carta subindo antes do site aparecer
     setTimeout(() => {
         document.getElementById("tela").style.opacity = "0";
         document.getElementById("fundoSite").style.opacity = "1";
@@ -186,30 +234,45 @@ function abrirCarta() {
             document.getElementById("tela").style.display = "none";
         }, 1500);
         
-        document.getElementById("musica.mp3").play();
-    }, 1500);
+        document.getElementById("musica").play();
+    }, 1800); // Aumentei um pouco o tempo para ele ver a carta subindo
 }
 
 setInterval(atualizarContador, 1000);
 atualizarContador();
 
-// Estrelas de fundo
 const canvas = document.getElementById("space");
 const ctx = canvas.getContext("2d");
-function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-window.onresize = resize; resize();
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.onresize = resize;
+resize();
 
 let estrelas = [];
-for(let i=0; i<150; i++) {
+for(let i=0; i<180; i++) {
     estrelas.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5});
 }
+
 function animar() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
     ctx.fillStyle = "white";
-    estrelas.forEach(e => { ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI*2); ctx.fill(); });
+    estrelas.forEach(e => {
+        ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI*2); ctx.fill();
+    });
     requestAnimationFrame(animar);
 }
 animar();
+
+const frases = ["Didy e Teteu, Teteu e Didy ❤️", "Você é minha pessoa favorita.", "Obrigada por tudo!"];
+const botao = document.getElementById("botao");
+const caixaMsg = document.getElementById("mensagem");
+
+botao.onclick = () => {
+    caixaMsg.style.display = "block";
+    caixaMsg.innerText = frases[Math.floor(Math.random() * frases.length)];
+};
 </script>
 
 </body>
