@@ -7,6 +7,7 @@
 <title>Nossa História ❤️</title>
 
 <style>
+
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
@@ -40,7 +41,7 @@ border-radius:25px;
 box-shadow:0 10px 40px rgba(0,0,0,.3);
 margin-top:40px;
 position: relative;
-z-index: 10;
+z-index: 10; /* Garante que o conteúdo fique na frente do balão */
 }
 
 img{
@@ -116,7 +117,7 @@ color:#8e24aa;
 margin-top:10px;
 }
 
-/* TELA PRETA INICIAL */
+/* ENVELOPE ROXO MISTERIOSO */
 .tela-inicial{
 position:fixed;
 top: 0; left: 0;
@@ -189,7 +190,6 @@ z-index: 2;
 transition: transform 1s ease;
 }
 
-/* CLASSES DE ANIMAÇÃO */
 .abrir .tampa{
 transform:rotateX(180deg);
 z-index: 1;
@@ -199,6 +199,32 @@ z-index: 1;
 transform:translateY(-150px);
 z-index: 6;
 }
+
+/* NOVO: BALÃO FLUTUANTE */
+.balao {
+position: fixed;
+background-color: rgba(255, 255, 255, 0.8);
+padding: 10px 20px;
+border-radius: 20px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+z-index: 1; /* Atrás do container */
+color: #7b1fa2;
+font-weight: bold;
+white-space: nowrap;
+animation: flutuarBalao 10s ease-in-out infinite;
+pointer-events: none; /* Não atrapalha cliques */
+}
+
+
+
+@keyframes flutuarBalao {
+0% { top: 80%; left: 10%; transform: rotate(-5deg); opacity: 0; }
+10% { opacity: 1; }
+50% { top: 20%; left: 80%; transform: rotate(5deg); }
+90% { opacity: 1; }
+100% { top: -10%; left: 30%; transform: rotate(-5deg); opacity: 0; }
+}
+
 </style>
 </head>
 
@@ -206,16 +232,18 @@ z-index: 6;
 
 <canvas id="space"></canvas>
 
+<div class="balao">Teteu e Didy ❤️</div>
+
 <div class="tela-inicial" id="tela">
-    <div class="envelope-wrapper" id="envelope_principal" onclick="abrirCarta()">
-        <div class="envelope">
-            <div class="tampa"></div>
-            <div class="carta">
-                <p>Abra com carinho 💌</p>
-                <span style="font-size: 0.8rem; color: #999; font-weight: normal;">Para: Teteu</span>
-            </div>
+<div class="envelope-wrapper" onclick="abrirCarta()">
+    <div class="envelope" id="env">
+        <div class="tampa"></div>
+        <div class="carta">
+            <p>Abra com carinho 💌</p>
+            <span style="font-size: 0.8rem; color: #999; font-weight: normal;">Para: Teteu</span>
         </div>
     </div>
+</div>
 </div>
 
 <audio id="musica" loop preload="auto">
@@ -223,100 +251,132 @@ z-index: 6;
 </audio>
 
 <div class="container">
-    <h2>Feliz 1 ano e 2 meses ❤️</h2>
-    <p>Estamos juntos há <span id="contador"></span></p>
 
-    <p class="frase">
-        Desde o dia que te conheci, me senti mais completa.
-        É um privilégio viver com você, te amo!
-    </p>
+<h2>Feliz 1 ano e 2 meses ❤️</h2>
 
-    <div class="carrossel">
-        <button onclick="voltar()">⬅</button>
-        <div class="carrossel-container">
-            <div class="carrossel-track" id="track">
-                <img src="fotos/foto.jpg">
-                <img src="fotos/foto1.jpg">
-                <img src="fotos/foto2.jpg">
-                <img src="fotos/foto3.jpg">
-                <img src="fotos/foto4.jpg">
-                <img src="fotos/foto5.jpg">
-                <img src="fotos/foto6.jpg">
-                <img src="fotos/foto7.jpg">
-            </div>
-        </div>
-        <button onclick="proxima()">➡</button>
-    </div>
+<p>Estamos juntos há <span id="contador"></span></p>
 
-    <button class="btn" id="botao">Ver surpresa ❤️</button>
-    <div id="mensagem"></div>
+<p class="frase">
+Desde o dia que te conheci, me senti mais completa.
+É um privilégio viver com você, te amo!
+</p>
 
-    <div class="timeline">
-        <h2>Nossa História 💖</h2>
-        <div class="timeline-item"><img src="fotos/foto.jpg"><div class="data">19/10/2024</div><p>Nos conhecemos no Halloween</p></div>
-        <div class="timeline-item"><img src="fotos/foto1.jpg"><div class="data">08/12/2024</div><p>Fomos juntos à praia pela primeira vez</p></div>
-        <div class="timeline-item"><img src="fotos/foto2.jpg"><div class="data">24/12/2024</div><p>1° Natal juntos</p></div>
-        <div class="timeline-item"><img src="fotos/foto3.jpg"><div class="data">07/03/2025</div><p>Nos eternizamos na pele</p></div>
-        <div class="timeline-item"><img src="fotos/foto4.jpg"><div class="data">21/04/2025</div><p>Primeira viagem juntos</p></div>
-        <div class="timeline-item"><img src="fotos/foto5.jpg"><div class="data">26/04/2025</div><p>Fingimos que iríamos casar pra conhecer o castelo</p></div>
-        <div class="timeline-item"><img src="fotos/foto6.jpg"><div class="data">01/11/2025</div><p>Momento importante e feliz</p></div>
-        <div class="timeline-item"><img src="fotos/foto7.jpg"><div class="data">27/02/2026</div><p>Nossa família feliz</p></div>
-    </div>
+<div class="carrossel">
+<button onclick="voltar()">⬅</button>
+<div class="carrossel-container">
+<div class="carrossel-track" id="track">
+<img src="fotos/foto.jpg">
+<img src="fotos/foto1.jpg">
+<img src="fotos/foto2.jpg">
+<img src="fotos/foto3.jpg">
+<img src="fotos/foto4.jpg">
+<img src="fotos/foto5.jpg">
+<img src="fotos/foto6.jpg">
+<img src="fotos/foto7.jpg">
+</div>
+</div>
+<button onclick="proxima()">➡</button>
+</div>
+
+<button class="btn" id="botao">Ver surpresa ❤️</button>
+<div id="mensagem"></div>
+
+<div class="timeline">
+<h2>Nossa História 💖</h2>
+<div class="timeline-item">
+<img src="fotos/foto.jpg">
+<div class="data">19/10/2024</div>
+<p>Nos conhecemos no Halloween</p>
+</div>
+<div class="timeline-item">
+<img src="fotos/foto1.jpg">
+<div class="data">08/12/2024</div>
+<p>Fomos juntos à praia pela primeira vez</p>
+</div>
+<div class="timeline-item">
+<img src="fotos/foto2.jpg">
+<div class="data">24/12/2024</div>
+<p>1° Natal juntos</p>
+</div>
+<div class="timeline-item">
+<img src="fotos/foto3.jpg">
+<div class="data">07/03/2025</div>
+<p>Nos eternizamos na pele</p>
+</div>
+<div class="timeline-item">
+<img src="fotos/foto4.jpg">
+<div class="data">21/04/2025</div>
+<p>Primeira viagem juntos</p>
+</div>
+<div class="timeline-item">
+<img src="fotos/foto5.jpg">
+<div class="data">26/04/2025</div>
+<p>Fingimos que iríamos casar pra conhecer o castelo</p>
+</div>
+<div class="timeline-item">
+<img src="fotos/foto6.jpg">
+<div class="data">01/11/2025</div>
+<p>Momento importante e feliz</p>
+</div>
+<div class="timeline-item">
+<img src="fotos/foto7.jpg">
+<div class="data">27/02/2026</div>
+<p>Nossa família feliz</p>
+</div>
+</div>
 </div>
 
 <script>
 const inicio=new Date(2025,0,12);
 
 function atualizarContador(){
-    const agora=new Date();
-    const diff=agora-inicio;
-    const dias=Math.floor(diff/(1000*60*60*24));
-    document.getElementById("contador").innerHTML="<strong style='color:#7b1fa2;'>"+dias+" dias</strong>";
+const agora=new Date();
+const diff=agora-inicio;
+const dias=Math.floor(diff/(1000*60*60*24));
+document.getElementById("contador").innerHTML="<strong style='color:#7b1fa2;'>"+dias+" dias</strong>";
 }
 setInterval(atualizarContador,1000);
 atualizarContador();
 
 function abrirCarta(){
-    const env_wrapper = document.getElementById("envelope_principal");
-    const musica = document.getElementById("musica");
+const env = document.getElementById("env");
+const musica = document.getElementById("musica");
 
-    if(env_wrapper.classList.contains("abrir")) return;
+if(env.classList.contains("abrir")) return;
 
-    // Toca a música e adiciona a classe de animação
-    musica.play().catch(e => console.log("Erro áudio:", e));
-    env_wrapper.classList.add("abrir");
+musica.play().catch(e => console.log("Erro ao tocar:", e));
 
-    // Remove a tela preta após a animação da carta subir
-    setTimeout(()=>{
-        document.getElementById("tela").style.opacity="0";
-        setTimeout(() => {
-            document.getElementById("tela").style.display="none";
-        }, 1000);
-    }, 2000);
+env.classList.add("abrir");
+
+setTimeout(()=>{
+document.getElementById("tela").style.opacity="0";
+setTimeout(() => {
+    document.getElementById("tela").style.display="none";
+}, 1000);
+}, 2000);
 }
 
-/* CARROSSEL */
+/* CARROSSEL E LÓGICA RESTANTE */
 let atual=0;
 const track=document.getElementById("track");
 const total=8;
 
 function atualizarCarrossel(){
-    track.style.transform="translateX(-"+(atual*250)+"px)";
+track.style.transform="translateX(-"+(atual*250)+"px)";
 }
 
 function proxima(){
-    atual++;
-    if(atual>=total) atual=0;
-    atualizarCarrossel();
+atual++;
+if(atual>=total) atual=0;
+atualizarCarrossel();
 }
 
 function voltar(){
-    atual--;
-    if(atual<0) atual=total-1;
-    atualizarCarrossel();
+atual--;
+if(atual<0) atual=total-1;
+atualizarCarrossel();
 }
 
-/* EXPLOSÃO E MENSAGENS */
 const frases=[
 "Didy e Teteu, Teteu e Didy ❤️", "Com você tudo fica mais bonito.", "Você é meu lugar favorito.", "Eu escolheria você mil vezes.",
 "Nosso amor é minha parte favorita.", "Você é minha pessoa favorita.", "Cada segundo com você vale a pena.",
@@ -328,87 +388,125 @@ const frases=[
 ];
 
 let intervaloAtivo = null;
+
 function digitarTexto(texto,elemento){
-    if(intervaloAtivo) clearInterval(intervaloAtivo); 
-    elemento.innerHTML="";
-    let i=0;
-    intervaloAtivo=setInterval(()=>{
-        elemento.innerHTML+=texto.charAt(i);
-        i++;
-        if(i>=texto.length) clearInterval(intervaloAtivo);
-    },40);
+if(intervaloAtivo) clearInterval(intervaloAtivo); 
+elemento.innerHTML="";
+let i=0;
+intervaloAtivo=setInterval(()=>{
+elemento.innerHTML+=texto.charAt(i);
+i++;
+if(i>=texto.length){
+clearInterval(intervaloAtivo);
+intervaloAtivo = null;
+}
+},40);
 }
 
 function explosao(){
-    for(let i=0;i<25;i++){
-        const c=document.createElement("div");
-        c.innerHTML=Math.random()>0.5?"💜":"❤️";
-        c.style.position="fixed";
-        c.style.left=window.innerWidth/2+"px";
-        c.style.top=window.innerHeight/2+"px";
-        c.style.fontSize="24px";
-        c.style.pointerEvents="none";
-        document.body.appendChild(c);
-        let x=(Math.random()-0.5)*600;
-        let y=(Math.random()-0.5)*600;
-        c.animate([{transform:"translate(0,0)",opacity:1},{transform:`translate(${x}px,${y}px)`,opacity:0}],{duration:1200});
-        setTimeout(()=>c.remove(),1200);
-    }
+for(let i=0;i<25;i++){
+const c=document.createElement("div");
+c.innerHTML=Math.random()>0.5?"💜":"❤️";
+c.style.position="fixed";
+c.style.left=window.innerWidth/2+"px";
+c.style.top=window.innerHeight/2+"px";
+c.style.fontSize="24px";
+c.style.pointerEvents="none";
+document.body.appendChild(c);
+let x=(Math.random()-0.5)*600;
+let y=(Math.random()-0.5)*600;
+c.animate([{transform:"translate(0,0)",opacity:1},{transform:`translate(${x}px,${y}px)`,opacity:0}],{duration:1200});
+setTimeout(()=>c.remove(),1200);
+}
 }
 
 const botao=document.getElementById("botao");
-botao.onclick=()=>{
+let tempoHold;
+let isHolding = false;
+
+botao.onmousedown=()=>{
+isHolding = false;
+tempoHold=setTimeout(()=>{
+isHolding = true;
+const caixa=document.getElementById("mensagem");
+caixa.style.display="block";
+digitarTexto("Pra sempre nós! ❤️",caixa);
+},3000);
+}
+
+botao.onmouseup=()=>{
+clearTimeout(tempoHold);
+if(!isHolding) {
     explosao();
     const frase=frases[Math.floor(Math.random()*frases.length)];
     const caixa=document.getElementById("mensagem");
     caixa.style.display="block";
     digitarTexto(frase,caixa);
 }
+}
 
-/* FUNDO ESTRELADO */
+/* CANVAS E EFEITOS */
 const canvas=document.getElementById("space");
 const ctx=canvas.getContext("2d");
 function resize() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
 window.onresize = resize;
 resize();
 
-let estrelasFundo=[];
+let estrelas=[];
 for(let i=0; i<300; i++){
-    estrelasFundo.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5});
+estrelas.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5});
 }
 
 function animar(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(let i=0; i<estrelasFundo.length; i++){
-        let e=estrelasFundo[i];
-        ctx.beginPath();
-        ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
-        ctx.fillStyle="white";
-        ctx.fill();
-    }
-    requestAnimationFrame(animar);
+ctx.clearRect(0,0,canvas.width,canvas.height);
+for(let i=0; i<estrelas.length; i++){
+let e=estrelas[i];
+ctx.beginPath();
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+for(let j=i+1; j<estrelas.length; j++){
+let e2=estrelas[j];
+let dist=Math.hypot(e.x-e2.x,e.y-e2.y);
+if(dist<90){
+ctx.strokeStyle="rgba(255,255,255,0.1)";
+ctx.beginPath();
+ctx.moveTo(e.x,e.y);
+ctx.lineTo(e2.x,e2.y);
+ctx.stroke();
+}
+}
+}
+requestAnimationFrame(animar);
 }
 animar();
 
-/* CHUVA DE ITENS */
+// CHUVA MIXTA (CORAÇÕES E ESTRELAS DESCENTES)
 setInterval(()=>{
-    const tipo = Math.random();
-    const elemento = document.createElement("div");
-    elemento.innerHTML = tipo < 0.6 ? (Math.random() > 0.5 ? "💜" : "❤️") : "✨";
-    elemento.style.position="fixed";
-    elemento.style.left=Math.random()*window.innerWidth+"px";
-    elemento.style.top="-20px";
-    elemento.style.zIndex="100";
-    document.body.appendChild(elemento);
+const tipo = Math.random();
+const elemento = document.createElement("div");
 
-    let y=0;
-    const velocidade = 8 + Math.random() * 5; 
-    const queda=setInterval(()=>{
-        y += velocidade;
-        elemento.style.top=y+"px";
-        if(y>window.innerHeight){ clearInterval(queda); elemento.remove(); }
-    },40);
-}, 400);
+if (tipo < 0.6) {
+elemento.innerHTML = Math.random() > 0.5 ? "💜" : "❤️";
+} else {
+elemento.innerHTML = "✨" : "🌟"; // Estrela dourada descendo
+}
+
+elemento.style.position="fixed";
+elemento.style.left=Math.random()*window.innerWidth+"px";
+elemento.style.top="-20px";
+elemento.style.zIndex="100";
+document.body.appendChild(elemento);
+
+let y=0;
+// Velocidade ligeiramente diferente para variação
+const velocidade = tipo < 0.6 ? 10 : 15; 
+const queda=setInterval(()=>{
+y += velocidade;
+elemento.style.top=y+"px";
+if(y>window.innerHeight){ clearInterval(queda); elemento.remove(); }
+},40);
+}, 600); // Frequência da chuva
 </script>
 
 </body>
