@@ -7,276 +7,285 @@
 <title>Nossa História ❤️</title>
 
 <style>
-/* Reset e Base */
-* { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    overflow-x: hidden;
-    background: #000;
-    color: #333;
-    min-height: 100vh;
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+text-align:center;
+overflow-x:hidden;
+color:#333;
+
+background:linear-gradient(270deg,#7b1fa2,#ce93d8,#90caf9,#f48fb1);
+background-size:800% 800%;
+animation:fundo 18s ease infinite;
 }
 
-/* Fundo do Site (Gradiente Animado) */
-.bg-site {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(270deg, #7b1fa2, #ce93d8, #90caf9, #f48fb1);
-    background-size: 400% 400%;
-    animation: fundoAnim 15s ease infinite;
-    z-index: -2;
-    opacity: 0;
-    transition: opacity 2s;
+@keyframes fundo{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
 }
 
-@keyframes fundoAnim {
-    0% { background-position: 0% 50% }
-    50% { background-position: 100% 50% }
-    100% { background-position: 0% 50% }
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
-
-/* Container Principal */
-.container {
-    max-width: 450px;
-    margin: 40px auto;
-    padding: 25px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 2s;
-    position: relative;
-    z-index: 10;
+.container{
+max-width:450px;
+margin:auto;
+padding:20px;
+background:white;
+border-radius:25px;
+box-shadow:0 10px 40px rgba(0,0,0,.3);
+margin-top:40px;
 }
 
-.visible { opacity: 1 !important; transform: translateY(0) !important; }
-
-img { width: 100%; border-radius: 15px; margin-bottom: 10px; }
-.frase { font-style: italic; color: #7b1fa2; margin: 15px 0; }
-
-/* DESIGN DO ENVELOPE TOTALMENTE ROXO */
-.tela-inicial {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: #000;
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999;
-    transition: opacity 1.5s;
+img{
+width:100%;
+border-radius:12px;
 }
 
-.envelope-wrapper {
-    position: relative;
-    width: 320px;
-    height: 220px;
-    perspective: 1000px;
+.frase{
+margin-top:10px;
+font-style:italic;
+color:#7b1fa2;
 }
 
-.envelope {
-    width: 100%;
-    height: 100%;
-    background: #7b1fa2; /* Roxo sólido */
-    border-radius: 0 0 15px 15px;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    overflow: hidden; /* Mantém a carta escondida dentro */
+.btn{
+background:linear-gradient(45deg,#ba68c8,#ec407a);
+border:none;
+padding:15px;
+border-radius:40px;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
 }
 
-/* Parte da frente do envelope para esconder a carta */
+#mensagem{
+margin-top:20px;
+display:none;
+font-weight:bold;
+color:#7b1fa2;
+min-height:40px;
+}
+
+.carrossel{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin:20px 0;
+}
+
+.carrossel-container{
+width:250px;
+overflow:hidden;
+border-radius:12px;
+}
+
+.carrossel-track{
+display:flex;
+transition:transform .6s ease;
+}
+
+.carrossel-track img{
+width:250px;
+flex-shrink:0;
+}
+
+.timeline{
+margin-top:40px;
+}
+
+.timeline-item{
+margin-bottom:40px;
+}
+
+.timeline-item img{
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.3);
+}
+
+.data{
+font-weight:bold;
+color:#8e24aa;
+margin-top:10px;
+}
+
+/* ENVELOPE ROXO MISTERIOSO (ALTERADO) */
+.tela-inicial{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#000; /* Fundo totalmente preto para o suspense */
+z-index:9999;
+transition: opacity 1.5s;
+}
+
+.envelope{
+width:320px;
+height:220px;
+background:#7b1fa2; /* Roxo sólido */
+border-radius:0 0 15px 15px;
+position:relative;
+cursor:pointer;
+box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+overflow: hidden; /* Esconde a carta lá dentro */
+}
+
+/* Parte da frente do envelope para esconder o papel */
 .envelope::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #6a1b9a; /* Roxo escuro */
-    clip-path: polygon(0 35%, 50% 100%, 100% 35%, 100% 100%, 0 100%);
-    z-index: 3;
+content: '';
+position: absolute;
+top: 0; left: 0;
+width: 100%; height: 100%;
+background: #6a1b9a; /* Roxo mais escuro */
+clip-path: polygon(0 35%, 50% 100%, 100% 35%, 100% 100%, 0 100%);
+z-index: 4;
 }
 
-.tampa {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 120px;
-    background: #8e24aa; /* Roxo da tampa */
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    transform-origin: top;
-    transition: transform 0.8s ease;
-    z-index: 4; /* Fica por cima de tudo no início */
-    border-radius: 15px 15px 0 0;
+.tampa{
+position:absolute;
+width:100%;
+height:120px;
+top: 0;
+left: 0;
+background:#8e24aa;
+clip-path:polygon(0 0,100% 0,50% 100%);
+transform-origin:top;
+transition:1s;
+z-index:5; /* Cobre tudo */
+border-radius: 15px 15px 0 0;
 }
 
-.carta {
-    position: absolute;
-    width: 280px;
-    height: 160px;
-    background: #fff;
-    top: 30px; /* Escondida atrás da tampa e frente roxa */
-    left: 20px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 2;
-    transition: transform 1s ease;
-}
-
-.carta p {
-    color: #7b1fa2; /* Texto roxo na carta */
-    font-weight: bold;
-    font-size: 1.2rem;
+.carta{
+position:absolute;
+width:280px;
+height:160px;
+background:white;
+top:30px; /* Começa "mergulhada" no roxo */
+left:20px;
+border-radius:10px;
+display:flex;
+flex-direction: column;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+font-size: 1.2rem;
+color: #7b1fa2;
+z-index:2;
+transition: 1s;
 }
 
 /* Animação de Abrir */
 .envelope.abrir {
-    overflow: visible; /* Deixa a carta sair */
+overflow: visible;
 }
 
-.envelope.abrir .tampa {
-    transform: rotateX(180deg);
-    z-index: 1; /* Vai para trás */
+.envelope.abrir .tampa{
+transform:rotateX(180deg);
+z-index: 1;
 }
 
-.envelope.abrir .carta {
-    transform: translateY(-150px);
-    z-index: 5; /* Sobe para frente de tudo */
+.envelope.abrir .carta{
+transform:translateY(-150px);
+z-index: 6;
 }
 
-/* Estilos Adicionais */
-.btn {
-    background: linear-gradient(45deg, #ba68c8, #ec407a);
-    border: none; padding: 15px 30px; border-radius: 50px;
-    color: white; font-weight: bold; cursor: pointer;
-    margin-top: 15px;
-}
-
-#contador { font-size: 1.2rem; }
-.timeline-item { margin-top: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-.data { font-weight: bold; color: #8e24aa; margin-top: 10px; display: block; }
 </style>
 </head>
 
 <body>
 
-<div class="bg-site" id="fundoSite"></div>
 <canvas id="space"></canvas>
 
 <div class="tela-inicial" id="tela">
-    <div class="envelope-wrapper">
-        <div class="envelope" id="env" onclick="abrirCarta()">
-            <div class="tampa"></div>
-            <div class="carta">
-                <p>Abra com carinho 💌</p>
-                <span style="font-size: 0.8rem; color: #999;">Para: Teteu</span>
-            </div>
-        </div>
-    </div>
+<div class="envelope" id="env" onclick="abrirCarta()">
+<div class="tampa"></div>
+<div class="carta">
+    <p>Abra com carinho 💌</p>
+    <span style="font-size: 0.8rem; color: #999; font-weight: normal;">Para: Teteu</span>
+</div>
+</div>
 </div>
 
 <audio id="musica" loop>
-    <source src="musica_tema.mp3" type="audio/mpeg">
+<source src="musica_tema.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container" id="conteudo">
-    <h2>Feliz 1 ano e 2 meses ❤️</h2>
-    <p>Estamos juntos há <span id="contador"></span></p>
-    
-    <p class="frase">"Desde o dia que te conheci, me senti mais completa. É um privilégio viver com você, te amo!"</p>
+<div class="container">
 
-    <div class="timeline">
-        <div class="timeline-item">
-            <img src="fotos/foto.jpg">
-            <span class="data">19/10/2024</span>
-            <p>Nos conhecemos no Halloween 🎃</p>
-        </div>
-        <div class="timeline-item">
-            <img src="fotos/foto3.jpg">
-            <span class="data">07/03/2025</span>
-            <p>Nos eternizamos na pele 💜</p>
-        </div>
-        <div class="timeline-item">
-            <img src="fotos/foto5.jpg">
-            <span class="data">26/04/2025</span>
-            <p>Conhecendo o castelo 🏰</p>
-        </div>
-    </div>
+<h2>Feliz 1 ano e 2 meses ❤️</h2>
 
-    <button class="btn" id="botao">Ver surpresa ❤️</button>
-    <div id="mensagem" style="margin-top:20px; font-weight:bold; color:#7b1fa2; display:none;"></div>
+<p>Estamos juntos há <span id="contador"></span></p>
+
+<p class="frase">
+Desde o dia que te conheci, me senti mais completa.
+É um privilégio viver com você, te amo!
+</p>
+
+<div class="carrossel">
+
+<button onclick="voltar()">⬅</button>
+
+<div class="carrossel-container">
+<div class="carrossel-track" id="track">
+
+<img src="fotos/foto.jpg">
+<img src="fotos/foto1.jpg">
+<img src="fotos/foto2.jpg">
+<img src="fotos/foto3.jpg">
+<img src="fotos/foto4.jpg">
+<img src="fotos/foto5.jpg">
+<img src="fotos/foto6.jpg">
+<img src="fotos/foto7.jpg">
+
+</div>
 </div>
 
-<script>
-// Data do Halloween 2024
-const dataInicio = new Date(2024, 9, 19); 
+<button onclick="proxima()">➡</button>
 
-function atualizarContador() {
-    const agora = new Date();
-    const diff = agora - dataInicio;
-    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-    document.getElementById("contador").innerHTML = `<strong style="color:#7b1fa2;">${dias} dias</strong>`;
-}
+</div>
 
-function abrirCarta() {
-    const env = document.getElementById("env");
-    env.classList.add("abrir");
-    
-    setTimeout(() => {
-        document.getElementById("tela").style.opacity = "0";
-        document.getElementById("fundoSite").style.opacity = "1";
-        document.getElementById("conteudo").classList.add("visible");
-        
-        setTimeout(() => {
-            document.getElementById("tela").style.display = "none";
-        }, 1500);
-        
-        document.getElementById("musica").play();
-    }, 1200);
-}
+<button class="btn" id="botao">Ver surpresa ❤️</button>
 
-setInterval(atualizarContador, 1000);
-atualizarContador();
+<div id="mensagem"></div>
 
-// Canvas Estelar
-const canvas = document.getElementById("space");
-const ctx = canvas.getContext("2d");
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.onresize = resize;
-resize();
+<div class="timeline">
 
-let estrelas = [];
-for(let i=0; i<180; i++) {
-    estrelas.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*1.5});
-}
+<h2>Nossa História 💖</h2>
 
-function animar() {
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.fillStyle = "white";
-    estrelas.forEach(e => {
-        ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI*2); ctx.fill();
-    });
-    requestAnimationFrame(animar);
-}
-animar();
+<div class="timeline-item">
+<img src="fotos/foto.jpg">
+<div class="data">19/10/2024</div>
+<p>Nos conhecemos no Halloween</p>
+</div>
 
-// Lógica da Surpresa
-const frases = ["Didy e Teteu, Teteu e Didy ❤️", "Você é minha pessoa favorita.", "Obrigada por tudo!"];
-const botao = document.getElementById("botao");
-const caixaMsg = document.getElementById("mensagem");
+<div class="timeline-item">
+<img src="fotos/foto1.jpg">
+<div class="data">08/12/2024</div>
+<p>Fomos juntos à praia pela primeira vez</p>
+</div>
 
-botao.onclick = () => {
-    caixaMsg.style.display = "block";
-    caixaMsg.innerText = frases[Math.floor(Math.random() * frases.length)];
-};
-</script>
+<div class="timeline-item">
+<img src="fotos/foto2.jpg">
+<div class="data">24/12/2024</div>
+<p>1° Natal juntos</p>
+</div>
 
-</body>
-</html>
+<div class="timeline-item">
+<img src="fotos/foto3.jpg">
+<div class="data">07/03/2025</div>
+<p>Nos eternizamos na pele</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto4.jpg">
+<div class="data">21
