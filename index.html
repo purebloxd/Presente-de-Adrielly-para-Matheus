@@ -290,8 +290,8 @@ function atualizarContador(){
 const agora=new Date();
 const diff=agora-inicio;
 const dias=Math.floor(diff/(1000*60*60*24));
-// Número em negrito aqui:
-document.getElementById("contador").innerHTML="<strong>"+dias+" dias</strong>";
+// Negrito Roxo configurado aqui:
+document.getElementById("contador").innerHTML="<strong style='color:#7b1fa2;'>"+dias+" dias</strong>";
 }
 
 setInterval(atualizarContador,1000);
