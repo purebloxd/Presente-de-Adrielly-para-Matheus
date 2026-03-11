@@ -14,7 +14,6 @@
             margin: 0; 
             padding: 20px;
             overflow-x: hidden;
-            /* FUNDO COM A&M PRETO E CORAÇÕES */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ctext x='15' y='35' font-family='Arial' font-size='12' font-weight='bold' fill='black'%3EA%26M%3C/text%3E%3Ctext x='60' y='75' font-size='12'%3E❤️%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
         }
@@ -81,8 +80,8 @@
 </head>
 <body>
 
-    <audio id="musica-amor" loop>
-        <source src="musica.mp3" type="audio/mpeg">
+    <audio id="musica-amor" preload="auto" loop>
+        <source src="musica.mp3.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -103,17 +102,14 @@
     </div>
 
     <script>
-        // Contador de dias
         const inicio = new Date('2024-10-19');
         const hoje = new Date();
         document.getElementById('dias-count').innerText = Math.floor((hoje - inicio) / (1000 * 60 * 60 * 24));
 
         function surpresaTotal() {
-            // 1. Tocar Música (o arquivo musica.mp3 que você subiu)
             const som = document.getElementById('musica-amor');
-            som.play().catch(e => console.log("O navegador bloqueou o áudio automático."));
+            som.play().catch(e => console.log("Erro no áudio"));
 
-            // 2. Mostrar Frases Aleatórias
             const frases = [
                 "Didy e Teteu, Teteu e Didy ❤️",
                 "1 ano e 2 meses sendo o casal mais incrível desse mundo.",
@@ -124,7 +120,6 @@
             document.getElementById('texto-random').innerText = frases[Math.floor(Math.random() * frases.length)];
             document.getElementById('mensagem-area').style.display = 'block';
 
-            // 3. Explosão de Corações (Roxos e Vermelhos)
             for (let i = 0; i < 45; i++) {
                 animarCoracao(i);
             }
@@ -152,10 +147,13 @@
                 const esquerda = parseFloat(h.style.left);
                 h.style.top = (topo + velY) + 'px';
                 h.style.left = (esquerda + velX) + 'px';
-                velY += 0.5; // Gravidade
+                velY += 0.5;
                 opacity -= 0.02;
                 h.style.opacity = opacity;
-                if (opacity <= 0) { clearInterval(loop); h.remove(); }
+                if (opacity <= 0) { 
+                    clearInterval(loop); 
+                    h.remove(); 
+                }
             }, 25);
         }
     </script>
