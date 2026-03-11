@@ -40,6 +40,8 @@ background:white;
 border-radius:25px;
 box-shadow:0 10px 40px rgba(0,0,0,.3);
 margin-top:40px;
+position: relative;
+z-index: 10; /* Garante que o conteúdo fique na frente do balão */
 }
 
 img{
@@ -198,12 +200,49 @@ transform:translateY(-150px);
 z-index: 6;
 }
 
+/* NOVO: BALÃO FLUTUANTE */
+.balao {
+position: fixed;
+background-color: rgba(255, 255, 255, 0.8);
+padding: 10px 20px;
+border-radius: 20px;
+box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+z-index: 1; /* Atrás do container */
+color: #7b1fa2;
+font-weight: bold;
+white-space: nowrap;
+animation: flutuarBalao 10s ease-in-out infinite;
+pointer-events: none; /* Não atrapalha cliques */
+}
+
+/* Ponta do balão */
+.balao::after {
+content: '';
+position: absolute;
+bottom: -10px;
+left: 50%;
+transform: translateX(-50%);
+border-width: 10px 10px 0;
+border-style: solid;
+border-color: rgba(255, 255, 255, 0.8) transparent transparent;
+}
+
+@keyframes flutuarBalao {
+0% { top: 80%; left: 10%; transform: rotate(-5deg); opacity: 0; }
+10% { opacity: 1; }
+50% { top: 20%; left: 80%; transform: rotate(5deg); }
+90% { opacity: 1; }
+100% { top: -10%; left: 30%; transform: rotate(-5deg); opacity: 0; }
+}
+
 </style>
 </head>
 
 <body>
 
 <canvas id="space"></canvas>
+
+<div class="balao">Teteu e Didy ❤️</div>
 
 <div class="tela-inicial" id="tela">
 <div class="envelope-wrapper" onclick="abrirCarta()">
@@ -315,7 +354,6 @@ const musica = document.getElementById("musica");
 
 if(env.classList.contains("abrir")) return;
 
-// Comando para iniciar a música imediatamente após a interação
 musica.play().catch(e => console.log("Erro ao tocar:", e));
 
 env.classList.add("abrir");
@@ -425,19 +463,19 @@ window.onresize = resize;
 resize();
 
 let estrelas=[];
-for(let i=0;i<300;i++){
+for(let i=0; i<300; i++){
 estrelas.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5});
 }
 
 function animar(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
-for(let i=0;i<estrelas.length;i++){
+for(let i=0; i<estrelas.length; i++){
 let e=estrelas[i];
 ctx.beginPath();
 ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
 ctx.fillStyle="white";
 ctx.fill();
-for(let j=i+1;j<estrelas.length;j++){
+for(let j=i+1; j<estrelas.length; j++){
 let e2=estrelas[j];
 let dist=Math.hypot(e.x-e2.x,e.y-e2.y);
 if(dist<90){
@@ -453,37 +491,32 @@ requestAnimationFrame(animar);
 }
 animar();
 
+// CHUVA MIXTA (CORAÇÕES E ESTRELAS DESCENTES)
 setInterval(()=>{
-const estrela=document.createElement("div");
-estrela.innerHTML="✨";
-estrela.style.position="fixed";
-estrela.style.left=Math.random()*window.innerWidth+"px";
-estrela.style.top="-20px";
-estrela.style.zIndex="100";
-document.body.appendChild(estrela);
-let y=0;
-const queda=setInterval(()=>{
-y+=20;
-estrela.style.top=y+"px";
-if(y>window.innerHeight){ clearInterval(queda); estrela.remove(); }
-},30);
-},1500);
+const tipo = Math.random();
+const elemento = document.createElement("div");
 
-setInterval(()=>{
-const c=document.createElement("div");
-c.innerHTML=Math.random()>0.5?"💜":"❤️";
-c.style.position="fixed";
-c.style.left=Math.random()*window.innerWidth+"px";
-c.style.top="-20px";
-c.style.zIndex="100";
-document.body.appendChild(c);
+if (tipo < 0.6) {
+elemento.innerHTML = Math.random() > 0.5 ? "💜" : "❤️";
+} else {
+elemento.innerHTML = "✨"; // Estrela dourada descendo
+}
+
+elemento.style.position="fixed";
+elemento.style.left=Math.random()*window.innerWidth+"px";
+elemento.style.top="-20px";
+elemento.style.zIndex="100";
+document.body.appendChild(elemento);
+
 let y=0;
+// Velocidade ligeiramente diferente para variação
+const velocidade = tipo < 0.6 ? 10 : 15; 
 const queda=setInterval(()=>{
-y+=10;
-c.style.top=y+"px";
-if(y>window.innerHeight){ clearInterval(queda); c.remove(); }
+y += velocidade;
+elemento.style.top=y+"px";
+if(y>window.innerHeight){ clearInterval(queda); elemento.remove(); }
 },40);
-},900);
+}, 600); // Frequência da chuva
 </script>
 
 </body>
