@@ -1,24 +1,23 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para o Meu Amor</title>
+<title>Nossa História ❤️</title>
 
 <style>
 
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-overflow:hidden;
+color:#333;
+text-align:center;
+overflow-x:hidden;
 
 background:linear-gradient(270deg,#7b1fa2,#ce93d8,#90caf9,#f48fb1);
 background-size:800% 800%;
-animation:fundo 20s ease infinite;
+animation:fundo 18s ease infinite;
 }
 
 @keyframes fundo{
@@ -28,78 +27,74 @@ animation:fundo 20s ease infinite;
 }
 
 .container{
-max-width:420px;
-width:90%;
+max-width:450px;
+margin:auto;
+padding:20px;
 background:white;
-padding:25px;
 border-radius:25px;
-box-shadow:0 10px 40px rgba(0,0,0,0.3);
-text-align:center;
-z-index:2;
+box-shadow:0 10px 40px rgba(0,0,0,.3);
+margin-top:40px;
 }
 
-.polaroid{
-background:white;
-padding:10px 10px 35px;
-box-shadow:0 5px 15px rgba(0,0,0,0.2);
-transform:rotate(-2deg);
-margin-bottom:20px;
-}
-
-.polaroid img{
+img{
 width:100%;
-border-radius:5px;
-max-height:380px;
-object-fit:cover;
+border-radius:10px;
 }
 
 .btn{
 background:linear-gradient(45deg,#ba68c8,#ec407a);
-color:white;
 border:none;
-padding:16px;
+padding:15px;
 border-radius:40px;
-width:100%;
-font-weight:bold;
+color:white;
+font-size:16px;
 cursor:pointer;
-font-size:1.1rem;
-transition:.3s;
-}
-
-.btn:hover{
-transform:scale(1.1);
+margin-top:15px;
 }
 
 #mensagem{
-display:none;
 margin-top:20px;
-padding:15px;
-background:#fdf7ff;
-border-radius:15px;
-border:1px solid #e1bee7;
+display:none;
+font-weight:bold;
 color:#7b1fa2;
 }
 
-.particula{
+.carrossel{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin:20px 0;
+}
+
+.carrossel img{
+width:250px;
+}
+
+.timeline{
+margin-top:40px;
+}
+
+.timeline-item{
+margin-bottom:40px;
+}
+
+.timeline-item img{
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.3);
+}
+
+.data{
+font-weight:bold;
+color:#8e24aa;
+margin-top:10px;
+}
+
+canvas{
 position:fixed;
-pointer-events:none;
-z-index:1;
-font-size:22px;
-animation:girar 4s linear infinite;
-}
-
-@keyframes girar{
-0%{transform:rotate(0deg)}
-100%{transform:rotate(360deg)}
-}
-
-.estrela{
-animation:brilhar 2s infinite alternate;
-}
-
-@keyframes brilhar{
-from{opacity:.3}
-to{opacity:1}
+top:0;
+left:0;
+z-index:-1;
 }
 
 .tela-inicial{
@@ -110,12 +105,9 @@ display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-background:rgba(0,0,0,0.45);
-backdrop-filter:blur(8px);
+background:rgba(0,0,0,.5);
 z-index:10;
 }
-
-/* ENVELOPE */
 
 .envelope{
 width:220px;
@@ -138,19 +130,17 @@ transition:1s;
 
 .carta{
 position:absolute;
-width:200px;
-height:120px;
+width:180px;
+height:100px;
 background:white;
-top:20px;
-left:10px;
+top:40px;
+left:20px;
 border-radius:6px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:14px;
-color:#7b1fa2;
-transform:translateY(60px);
-transition:1s;
+font-weight:bold;
+cursor:pointer;
 }
 
 .envelope.abrir .tampa{
@@ -161,93 +151,178 @@ transform:rotateX(180deg);
 transform:translateY(-120px);
 }
 
-.texto-envelope{
-margin-top:20px;
-color:white;
-font-size:20px;
-}
-
-/* CONSTELAÇÃO */
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:0;
-}
-
-/* CORAÇÕES ENCONTRO */
-
-.coracao-encontro{
-position:fixed;
-font-size:30px;
-z-index:1;
-}
-
 </style>
 </head>
 
 <body>
 
-<canvas id="constelacao"></canvas>
-
 <div class="tela-inicial" id="tela">
 
-<div class="envelope" onclick="abrirSite()" id="env">
+<div class="envelope" id="env">
 <div class="tampa"></div>
-<div class="carta">Para você ❤️</div>
+<div class="carta" onclick="abrirCarta()">Abra aqui 💌</div>
 </div>
-
-<div class="texto-envelope">Abrir carta</div>
 
 </div>
 
 <audio id="musica" loop>
-<source src="musica.mp3" type="audio/mpeg">
+<source src="musica_tema.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
 
-<div class="polaroid">
-<img src="foto.jpg">
+<h2>Feliz 1 ano e 2 meses ❤️</h2>
+
+<p>Estamos juntos há <span id="contador"></span></p>
+
+<div class="carrossel">
+
+<button onclick="voltar()">⬅</button>
+
+<img id="fotoCarrossel" src="foto.jpg">
+
+<button onclick="proxima()">➡</button>
+
 </div>
 
-<h2 style="color:#8e24aa">Feliz 1 ano e 2 meses ❤️</h2>
-
-<p style="font-weight:bold;color:#7b1fa2">
-Estamos juntos há <span id="contador"></span> ❤️
-</p>
-
-<p style="color:#555">
-Desde aquele Halloween de 2024 quando nos conhecemos,
-minha vida ficou muito mais bonita com você.
-</p>
-
-<button class="btn" onclick="surpresa()">Ver surpresa ❤️</button>
+<button class="btn" id="botao">Ver surpresa ❤️</button>
 
 <div id="mensagem"></div>
+
+<div class="timeline">
+
+<h2>Nossa História 💖</h2>
+
+<div class="timeline-item">
+<img src="foto.jpg">
+<div class="data">19/10/2024</div>
+<p>Nos conhecemos no Halloween</p>
+</div>
+
+<div class="timeline-item">
+<img src="foto1.jpg">
+<div class="data">08/12/2024</div>
+<p>Fomos juntos à praia pela primeira vez</p>
+</div>
+
+<div class="timeline-item">
+<img src="foto2.jpg">
+<div class="data">24/12/2024</div>
+<p>1° Natal juntos</p>
+</div>
+
+<div class="timeline-item">
+<img src="foto3.jpg">
+<div class="data">07/03/2025</div>
+<p>Nos eternizamos na pele</p>
+</div>
+
+<div class="timeline-item">
+<img src="foto4.jpg">
+<div class="data">21/04/2025</div>
+<p>Primeira viagem juntos</p>
+</div>
+
+<div class="timeline-item">
+<img src="foto5.jpg">
+<div class="data">26/04/2025</div>
+<p>Fingimos que iríamos casar pra conhecer o castelo</p>
+</div>
+
+<div class="timeline-item">
+<img src="foto6.jpg">
+<div class="data">01/11/2025</div>
+<p>Momento importante e feliz</p>
+</div>
+
+<div class="timeline-item">
+<img src="foto7.jpg">
+<div class="data">27/02/2026</div>
+<p>Nossa família feliz</p>
+</div>
+
+</div>
 
 </div>
 
 <script>
 
-/* CONTADOR */
-
 const inicio=new Date("2025-01-12");
 
 function atualizarContador(){
+
 const agora=new Date();
+
 const diff=agora-inicio;
+
 const dias=Math.floor(diff/(1000*60*60*24));
-document.getElementById("contador").innerHTML=`${dias} dias`;
+
+document.getElementById("contador").innerHTML=dias+" dias";
+
 }
 
 setInterval(atualizarContador,1000);
+
 atualizarContador();
 
-/* FRASES */
+function abrirCarta(){
+
+document.getElementById("env").classList.add("abrir");
+
+setTimeout(()=>{
+
+document.getElementById("tela").style.display="none";
+
+document.getElementById("musica").play();
+
+},2000);
+
+}
+
+const fotos=[
+"foto.jpg",
+"foto1.jpg",
+"foto2.jpg",
+"foto3.jpg",
+"foto4.jpg",
+"foto5.jpg",
+"foto6.jpg",
+"foto7.jpg"
+];
+
+let atual=0;
+
+function proxima(){
+
+atual++;
+
+if(atual>=fotos.length){
+
+atual=0;
+
+}
+
+document.getElementById("fotoCarrossel").src=fotos[atual];
+
+}
+
+function voltar(){
+
+atual--;
+
+if(atual<0){
+
+atual=fotos.length-1;
+
+}
+
+document.getElementById("fotoCarrossel").src=fotos[atual];
+
+}
 
 const frases=[
+const frases=[
+
 "Didy e Teteu, Teteu e Didy ❤️",
 "Com você tudo fica mais bonito.",
 "Você é meu lugar favorito.",
@@ -274,21 +349,6 @@ const frases=[
 "Eu amo nós dois."
 ];
 
-/* ABRIR ENVELOPE */
-
-function abrirSite(){
-
-document.getElementById("env").classList.add("abrir");
-
-setTimeout(()=>{
-document.getElementById("tela").style.display="none";
-document.getElementById("musica").play().catch(()=>{});
-},1500);
-
-}
-
-/* SURPRESA */
-
 function surpresa(){
 
 const frase=frases[Math.floor(Math.random()*frases.length)];
@@ -296,195 +356,39 @@ const frase=frases[Math.floor(Math.random()*frases.length)];
 const caixa=document.getElementById("mensagem");
 
 caixa.innerText=frase;
+
 caixa.style.display="block";
 
-explodirAmor();
 }
 
-/* EXPLOSÃO */
+const botao=document.getElementById("botao");
 
-function explodirAmor(){
+let tempo;
 
-for(let i=0;i<150;i++){
+botao.onmousedown=()=>{
 
-const p=document.createElement("div");
+tempo=setTimeout(()=>{
 
-p.className="particula";
-p.innerHTML=Math.random()>0.5?"❤️":"💜";
+const caixa=document.getElementById("mensagem");
 
-document.body.appendChild(p);
+caixa.innerText="💌 para sempre nós 💌";
 
-let ang=Math.random()*Math.PI*2;
-let vel=5+Math.random()*15;
+caixa.style.display="block";
 
-let x=window.innerWidth/2;
-let y=window.innerHeight/2;
-
-let vx=Math.cos(ang)*vel;
-let vy=Math.sin(ang)*vel;
-
-let op=1;
-
-const loop=setInterval(()=>{
-
-x+=vx;
-y+=vy;
-vy+=0.4;
-op-=0.02;
-
-p.style.left=x+"px";
-p.style.top=y+"px";
-p.style.opacity=op;
-
-if(op<=0){
-clearInterval(loop);
-p.remove();
-}
-
-},25);
-}
-}
-
-/* PARTICULAS CAINDO */
-
-function criarParticula(){
-
-const tipos=["❤️","💜","⭐"];
-
-const p=document.createElement("div");
-p.className="particula";
-
-const tipo=tipos[Math.floor(Math.random()*tipos.length)];
-p.innerHTML=tipo;
-
-if(tipo==="⭐") p.classList.add("estrela");
-
-document.body.appendChild(p);
-
-let x=Math.random()*window.innerWidth;
-let y=-20;
-
-p.style.left=x+"px";
-p.style.top=y+"px";
-
-let vel=2+Math.random()*3;
-
-const loop=setInterval(()=>{
-
-y+=vel;
-p.style.top=y+"px";
-
-if(y>window.innerHeight){
-clearInterval(loop);
-p.remove();
-}
-
-},25);
+},3000);
 
 }
 
-setInterval(criarParticula,700);
+botao.onmouseup=()=>{
 
-/* CORAÇÕES QUE SE ENCONTRAM */
+clearTimeout(tempo);
 
-function coracoesEncontro(){
-
-const c1=document.createElement("div");
-const c2=document.createElement("div");
-
-c1.innerHTML="💜";
-c2.innerHTML="❤️";
-
-c1.className="coracao-encontro";
-c2.className="coracao-encontro";
-
-document.body.appendChild(c1);
-document.body.appendChild(c2);
-
-let x1=0;
-let x2=window.innerWidth;
-
-let y=window.innerHeight/2;
-
-const loop=setInterval(()=>{
-
-x1+=5;
-x2-=5;
-
-c1.style.left=x1+"px";
-c1.style.top=y+"px";
-
-c2.style.left=x2+"px";
-c2.style.top=y+"px";
-
-if(x2-x1<40){
-
-c1.innerHTML="💖";
-c2.remove();
-
-setTimeout(()=>c1.remove(),2000);
-
-clearInterval(loop);
+surpresa();
 
 }
-
-},30);
-
-}
-
-setInterval(coracoesEncontro,12000);
-
-/* CONSTELAÇÃO */
-
-const canvas=document.getElementById("constelacao");
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let estrelas=[];
-
-for(let i=0;i<80;i++){
-estrelas.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height
-});
-}
-
-function desenhar(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-for(let i=0;i<estrelas.length;i++){
-
-for(let j=i+1;j<estrelas.length;j++){
-
-let dx=estrelas[i].x-estrelas[j].x;
-let dy=estrelas[i].y-estrelas[j].y;
-let dist=Math.sqrt(dx*dx+dy*dy);
-
-if(dist<120){
-
-ctx.strokeStyle="rgba(255,255,255,0.2)";
-ctx.beginPath();
-ctx.moveTo(estrelas[i].x,estrelas[i].y);
-ctx.lineTo(estrelas[j].x,estrelas[j].y);
-ctx.stroke();
-
-}
-
-}
-
-}
-
-requestAnimationFrame(desenhar);
-
-}
-
-desenhar();
 
 </script>
 
 </body>
 </html>
-
+```
