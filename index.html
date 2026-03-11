@@ -1,260 +1,611 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nossa História ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nossa História ❤️</title>
 
-    <style>
-        /* O SEU FUNDO ANIMADO ESTÁ AQUI */
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
-            overflow-x: hidden;
-            color: #333;
-            background: linear-gradient(270deg, #7b1fa2, #ce93d8, #90caf9, #f48fb1);
-            background-size: 800% 800%;
-            animation: fundo 18s ease infinite;
-        }
+<style>
 
-        @keyframes fundo {
-            0% { background-position: 0% 50% }
-            50% { background-position: 100% 50% }
-            100% { background-position: 0% 50% }
-        }
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+text-align:center;
+overflow-x:hidden;
+color:#333;
 
-        /* AS SUAS ESTRELAS */
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
+background:linear-gradient(270deg,#7b1fa2,#ce93d8,#90caf9,#f48fb1);
+background-size:800% 800%;
+animation:fundo 18s ease infinite;
+}
 
-        .container {
-            max-width: 450px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, .3);
-            margin-top: 40px;
-            margin-bottom: 40px;
-            position: relative;
-            z-index: 2;
-        }
+@keyframes fundo{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
 
-        img { width: 100%; border-radius: 12px; }
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
 
-        .btn {
-            background: linear-gradient(45deg, #ba68c8, #ec407a);
-            border: none;
-            padding: 15px;
-            border-radius: 40px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 15px;
-            width: 80%;
-            font-weight: bold;
-        }
+.container{
+max-width:450px;
+margin:auto;
+padding:20px;
+background:white;
+border-radius:25px;
+box-shadow:0 10px 40px rgba(0,0,0,.3);
+margin-top:40px;
+}
 
-        #mensagem {
-            margin-top: 20px;
-            display: none;
-            font-weight: bold;
-            color: #7b1fa2;
-            padding: 15px;
-            background: #f3e5f5;
-            border-radius: 15px;
-        }
+img{
+width:100%;
+border-radius:12px;
+}
 
-        .carrossel-container {
-            width: 250px;
-            margin: 20px auto;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+.frase{
+margin-top:10px;
+font-style:italic;
+color:#7b1fa2;
+}
 
-        .carrossel-track {
-            display: flex;
-            transition: transform .6s ease;
-        }
+.btn{
+background:linear-gradient(45deg,#ba68c8,#ec407a);
+border:none;
+padding:15px;
+border-radius:40px;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
+}
 
-        .carrossel-track img {
-            width: 250px;
-            height: 350px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
+#mensagem{
+margin-top:20px;
+display:none;
+font-weight:bold;
+color:#7b1fa2;
+min-height:40px;
+}
 
-        /* TELA INICIAL DO ENVELOPE */
-        .tela-inicial {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 100;
-        }
+.carrossel{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin:20px 0;
+}
 
-        .envelope {
-            width: 220px;
-            height: 140px;
-            background: #ec407a;
-            border-radius: 10px;
-            position: relative;
-            cursor: pointer;
-        }
+.carrossel-container{
+width:250px;
+overflow:hidden;
+border-radius:12px;
+}
 
-        .tampa {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #f06292;
-            clip-path: polygon(0 0, 100% 0, 50% 60%);
-            transform-origin: top;
-            transition: 1s;
-            z-index: 3;
-        }
+.carrossel-track{
+display:flex;
+transition:transform .6s ease;
+}
 
-        .carta {
-            position: absolute;
-            width: 180px;
-            height: 100px;
-            background: white;
-            top: 20px;
-            left: 20px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            z-index: 2;
-            transition: 1s;
-        }
+.carrossel-track img{
+width:250px;
+flex-shrink:0;
+}
 
-        .envelope.abrir .tampa { transform: rotateX(180deg); }
-        .envelope.abrir .carta { transform: translateY(-100px); }
-    </style>
+.timeline{
+margin-top:40px;
+}
+
+.timeline-item{
+margin-bottom:40px;
+}
+
+.timeline-item img{
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.3);
+}
+
+.data{
+font-weight:bold;
+color:#8e24aa;
+margin-top:10px;
+}
+
+.tela-inicial{
+position:fixed;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#00000088;
+z-index:10;
+}
+
+.envelope{
+width:220px;
+height:140px;
+background:#ec407a;
+border-radius:10px;
+position:relative;
+cursor:pointer;
+}
+
+.tampa{
+position:absolute;
+width:100%;
+height:100%;
+background:#f06292;
+clip-path:polygon(0 0,100% 0,50% 60%);
+transform-origin:top;
+transition:1s;
+}
+
+.carta{
+position:absolute;
+width:180px;
+height:100px;
+background:white;
+top:40px;
+left:20px;
+border-radius:6px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+cursor:pointer;
+}
+
+.envelope.abrir .tampa{
+transform:rotateX(180deg);
+}
+
+.envelope.abrir .carta{
+transform:translateY(-120px);
+}
+
+</style>
 </head>
 
 <body>
 
-    <canvas id="space"></canvas>
+<canvas id="space"></canvas>
 
-    <div class="tela-inicial" id="tela">
-        <div class="envelope" id="env" onclick="abrirCarta()">
-            <div class="tampa"></div>
-            <div class="carta">Abra aqui 💌</div>
-        </div>
-    </div>
+<div class="tela-inicial" id="tela">
+<div class="envelope" id="env">
+<div class="tampa"></div>
+<div class="carta" onclick="abrirCarta()">Abra aqui 💌</div>
+</div>
+</div>
 
-    <audio id="musica" loop>
-        <source src="musica_tema.mp3" type="audio/mpeg">
-    </audio>
+<audio id="musica" loop>
+<source src="musica_tema.mp3" type="audio/mpeg">
+</audio>
 
-    <div class="container">
-        <h2>Feliz 1 ano e 2 meses ❤️</h2>
-        <p>Estamos juntos há <span id="contador" style="font-weight: bold; color: #ec407a;"></span></p>
+<div class="container">
 
-        <div class="carrossel-container">
-            <div class="carrossel-track" id="track">
-                <img src="fotos/foto.jpg">
-                <img src="fotos/foto1.jpg">
-                <img src="fotos/foto2.jpg">
-                <img src="fotos/foto3.jpg">
-                <img src="fotos/foto4.jpg">
-                <img src="fotos/foto5.jpg">
-                <img src="fotos/foto6.jpg">
-                <img src="fotos/foto7.jpg">
-            </div>
-        </div>
-        
-        <div style="display:flex; justify-content:center; gap:10px;">
-            <button class="btn" style="width:40px;" onclick="voltar()">⬅</button>
-            <button class="btn" id="botao">Ver surpresa ❤️</button>
-            <button class="btn" style="width:40px;" onclick="proxima()">➡</button>
-        </div>
+<h2>Feliz 1 ano e 2 meses ❤️</h2>
 
-        <div id="mensagem"></div>
+<p>Estamos juntos há <span id="contador"></span></p>
 
-        <div style="margin-top:30px;">
-            <h3>Nossa Linha do Tempo 💖</h3>
-            <p>19/10/2024 - O dia que nos conhecemos no Halloween 🎃</p>
-            <p>12/01/2025 - O início de tudo ❤️</p>
-            <p>07/03/2025 - Nossa tattoo 🖋️</p>
-        </div>
-    </div>
+<p class="frase">
+Desde o dia que te conheci, me senti mais completa.
+É um privilégio viver com você, te amo!
+</p>
 
-    <script>
-        // TODAS AS SUAS FUNÇÕES ESTÃO AQUI EMBAIXO
-        const inicio = new Date(2025, 0, 12); 
-        function atualizarContador() {
-            const agora = new Date();
-            const diff = agora - inicio;
-            const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById("contador").innerHTML = dias + " dias";
-        }
-        setInterval(atualizarContador, 1000);
-        atualizarContador();
+<div class="carrossel">
 
-        function abrirCarta() {
-            document.getElementById("env").classList.add("abrir");
-            setTimeout(() => {
-                document.getElementById("tela").style.display = "none";
-                document.getElementById("musica").play();
-            }, 1500);
-        }
+<button onclick="voltar()">⬅</button>
 
-        let atual = 0;
-        function proxima() { atual = (atual + 1) % 8; document.getElementById("track").style.transform = `translateX(-${atual * 250}px)`; }
-        function voltar() { atual = (atual - 1 + 8) % 8; document.getElementById("track").style.transform = `translateX(-${atual * 250}px)`; }
+<div class="carrossel-container">
+<div class="carrossel-track" id="track">
 
-        let intervaloDigitacao;
-        function digitarTexto(texto, elemento) {
-            clearInterval(intervaloDigitacao);
-            elemento.innerHTML = "";
-            let i = 0;
-            intervaloDigitacao = setInterval(() => {
-                elemento.innerHTML += texto.charAt(i);
-                i++;
-                if (i >= texto.length) clearInterval(intervaloDigitacao);
-            }, 50);
-        }
+<img src="fotos/foto.jpg">
+<img src="fotos/foto1.jpg">
+<img src="fotos/foto2.jpg">
+<img src="fotos/foto3.jpg">
+<img src="fotos/foto4.jpg">
+<img src="fotos/foto5.jpg">
+<img src="fotos/foto6.jpg">
+<img src="fotos/foto7.jpg">
 
-        document.getElementById("botao").onclick = () => {
-            const frases = ["Te amo!", "Você é o melhor!", "Didy e Teteu sempre ❤️"];
-            digitarTexto(frases[Math.floor(Math.random() * frases.length)], document.getElementById("mensagem"));
-            document.getElementById("mensagem").style.display = "block";
-        };
+</div>
+</div>
 
-        // ESTRELAS NO FUNDO
-        const canvas = document.getElementById("space");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        let estrelas = [];
-        for (let i = 0; i < 100; i++) { estrelas.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 }); }
-        function animar() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "white";
-            for (let e of estrelas) { ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill(); }
-            requestAnimationFrame(animar);
-        }
-        animar();
+<button onclick="proxima()">➡</button>
 
-        // CORAÇÕES CAINDO
-        setInterval(() => {
-            const el = document.createElement("div");
-            el.innerHTML = "❤️"; el.style.position = "fixed"; el.style.left = Math.random() * window.innerWidth + "px"; el.style.top = "-20px";
-            document.body.appendChild(el);
-            let y = 0;
-            const queda = setInterval(() => { y += 3; el.style.top = y + "px"; if (y > window.innerHeight) { clearInterval(queda); el.remove(); } }, 30);
-        }, 1000);
-    </script>
+</div>
+
+<button class="btn" id="botao">Ver surpresa ❤️</button>
+
+<div id="mensagem"></div>
+
+<div class="timeline">
+
+<h2>Nossa História 💖</h2>
+
+<div class="timeline-item">
+<img src="fotos/foto.jpg">
+<div class="data">19/10/2024</div>
+<p>Nos conhecemos no Halloween</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto1.jpg">
+<div class="data">08/12/2024</div>
+<p>Fomos juntos à praia pela primeira vez</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto2.jpg">
+<div class="data">24/12/2024</div>
+<p>1° Natal juntos</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto3.jpg">
+<div class="data">07/03/2025</div>
+<p>Nos eternizamos na pele</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto4.jpg">
+<div class="data">21/04/2025</div>
+<p>Primeira viagem juntos</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto5.jpg">
+<div class="data">26/04/2025</div>
+<p>Fingimos que iríamos casar pra conhecer o castelo</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto6.jpg">
+<div class="data">01/11/2025</div>
+<p>Momento importante e feliz</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto7.jpg">
+<div class="data">27/02/2026</div>
+<p>Nossa família feliz</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* CONTADOR CORRETO */
+
+const inicio=new Date(2025,01,12);
+
+function atualizarContador(){
+
+const agora=new Date();
+
+const diff=agora-inicio;
+
+const dias=Math.floor(diff/(1000*60*60*24));
+
+document.getElementById("contador").innerHTML=dias+" dias";
+
+}
+
+setInterval(atualizarContador,1000);
+
+atualizarContador();
+
+/* ENVELOPE */
+
+function abrirCarta(){
+
+document.getElementById("env").classList.add("abrir");
+
+setTimeout(()=>{
+
+document.getElementById("tela").style.display="none";
+
+document.getElementById("musica").play();
+
+},1500);
+
+}
+
+/* CARROSSEL */
+
+let atual=0;
+
+const track=document.getElementById("track");
+
+const total=8;
+
+function atualizarCarrossel(){
+
+track.style.transform="translateX(-"+(atual*250)+"px)";
+
+}
+
+function proxima(){
+
+atual++;
+
+if(atual>=total) atual=0;
+
+atualizarCarrossel();
+
+}
+
+function voltar(){
+
+atual--;
+
+if(atual<0) atual=total-1;
+
+atualizarCarrossel();
+
+}
+
+/* FRASES */
+
+const frases=[
+
+"Didy e Teteu, Teteu e Didy ❤️",
+"Com você tudo fica mais bonito.",
+"Você é meu lugar favorito.",
+"Eu escolheria você mil vezes.",
+"Nosso amor é minha parte favorita.",
+"Você é minha pessoa favorita.",
+"Cada segundo com você vale a pena.",
+"Nosso amor é minha parte favorita da vida.",
+"Amar você é a coisa mais fácil que já fiz.",
+"Obrigada por fazer minha vida mais feliz.",
+"Você transforma qualquer momento em memória.",
+"Eu escolheria você em todas as vidas.",
+"Nosso amor é a melhor coincidência da minha vida.",
+"Você é meu sorriso favorito.",
+"Meu coração sempre encontra o seu.",
+"Você é a melhor parte dos meus dias.",
+"Com você tudo faz sentido.",
+"Meu mundo ficou mais bonito depois que você chegou.",
+"Nosso amor merece mil comemorações.",
+"Eu amo a vida que tenho com você.",
+"Obrigada por ser exatamente quem você é.",
+"Eu amo nós dois."
+
+];
+
+/* TEXTO DIGITANDO */
+
+function digitarTexto(texto,elemento){
+
+elemento.innerHTML="";
+
+let i=0;
+
+const intervalo=setInterval(()=>{
+
+elemento.innerHTML+=texto.charAt(i);
+
+i++;
+
+if(i>=texto.length){
+
+clearInterval(intervalo);
+
+}
+
+},40);
+
+}
+
+/* EXPLOSÃO CORAÇÕES */
+
+function explosao(){
+
+for(let i=0;i<25;i++){
+
+const c=document.createElement("div");
+
+c.innerHTML=Math.random()>0.5?"💜":"❤️";
+
+c.style.position="fixed";
+c.style.left=window.innerWidth/2+"px";
+c.style.top=window.innerHeight/2+"px";
+c.style.fontSize="24px";
+c.style.pointerEvents="none";
+
+document.body.appendChild(c);
+
+let x=(Math.random()-0.5)*600;
+let y=(Math.random()-0.5)*600;
+
+c.animate([
+{transform:"translate(0,0)",opacity:1},
+{transform:`translate(${x}px,${y}px)`,opacity:0}
+],{duration:1200});
+
+setTimeout(()=>c.remove(),1200);
+
+}
+
+}
+
+const botao=document.getElementById("botao");
+
+let tempo;
+
+botao.onmousedown=()=>{
+
+tempo=setTimeout(()=>{
+
+const caixa=document.getElementById("mensagem");
+
+caixa.style.display="block";
+
+digitarTexto("Pra sempre nós! ❤️",caixa);
+
+},3000);
+
+}
+
+botao.onmouseup=()=>{
+
+clearTimeout(tempo);
+
+explosao();
+
+const frase=frases[Math.floor(Math.random()*frases.length)];
+
+const caixa=document.getElementById("mensagem");
+
+caixa.style.display="block";
+
+digitarTexto(frase,caixa);
+
+}
+
+/* FUNDO ESPACIAL */
+
+const canvas=document.getElementById("space");
+
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+
+canvas.height=window.innerHeight;
+
+let estrelas=[];
+
+for(let i=0;i<300;i++){
+
+estrelas.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5
+
+});
+
+}
+
+function animar(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+for(let i=0;i<estrelas.length;i++){
+
+let e=estrelas[i];
+
+ctx.beginPath();
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+
+for(let j=i+1;j<estrelas.length;j++){
+
+let e2=estrelas[j];
+
+let dist=Math.hypot(e.x-e2.x,e.y-e2.y);
+
+if(dist<90){
+
+ctx.strokeStyle="rgba(255,255,255,0.1)";
+ctx.beginPath();
+ctx.moveTo(e.x,e.y);
+ctx.lineTo(e2.x,e2.y);
+ctx.stroke();
+
+}
+
+}
+
+}
+
+requestAnimationFrame(animar);
+
+}
+
+animar();
+
+/* ESTRELAS CAINDO */
+
+setInterval(()=>{
+
+const estrela=document.createElement("div");
+
+estrela.innerHTML="✨";
+
+estrela.style.position="fixed";
+estrela.style.left=Math.random()*window.innerWidth+"px";
+estrela.style.top="-20px";
+
+document.body.appendChild(estrela);
+
+let y=0;
+
+const queda=setInterval(()=>{
+
+y+=20;
+
+estrela.style.top=y+"px";
+
+if(y>window.innerHeight){
+
+clearInterval(queda);
+estrela.remove();
+
+}
+
+},30);
+
+},1500);
+
+/* CORAÇÕES CAINDO */
+
+setInterval(()=>{
+
+const c=document.createElement("div");
+
+c.innerHTML=Math.random()>0.5?"💜":"❤️";
+
+c.style.position="fixed";
+c.style.left=Math.random()*window.innerWidth+"px";
+c.style.top="-20px";
+
+document.body.appendChild(c);
+
+let y=0;
+
+const queda=setInterval(()=>{
+
+y+=10;
+
+c.style.top=y+"px";
+
+if(y>window.innerHeight){
+
+clearInterval(queda);
+c.remove();
+
+}
+
+},40);
+
+},900);
+
+</script>
+
 </body>
 </html>
+```
+
+me envia ele corrigido nesse modelo
