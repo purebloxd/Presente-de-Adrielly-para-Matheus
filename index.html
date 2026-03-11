@@ -14,7 +14,6 @@ font-family:'Segoe UI',sans-serif;
 text-align:center;
 overflow-x:hidden;
 color:#333;
-
 background:linear-gradient(270deg,#7b1fa2,#ce93d8,#90caf9,#f48fb1);
 background-size:800% 800%;
 animation:fundo 18s ease infinite;
@@ -146,7 +145,6 @@ position:relative;
 box-shadow: 0 20px 40px rgba(0,0,0,0.5);
 }
 
-/* Parte da frente do envelope */
 .envelope::before {
 content: '';
 position: absolute;
@@ -190,7 +188,6 @@ z-index: 2;
 transition: transform 1s ease;
 }
 
-/* Animação de Abrir */
 .abrir .tampa{
 transform:rotateX(180deg);
 z-index: 1;
@@ -220,8 +217,8 @@ z-index: 6;
 </div>
 </div>
 
-<audio id="musica" loop>
-<source src="musica_tema.mp3" type="audio/mpeg">
+<audio id="musica" loop preload="auto">
+    <source src="https://files.catbox.moe/4sunlu.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container">
@@ -236,12 +233,9 @@ Desde o dia que te conheci, me senti mais completa.
 </p>
 
 <div class="carrossel">
-
 <button onclick="voltar()">⬅</button>
-
 <div class="carrossel-container">
 <div class="carrossel-track" id="track">
-
 <img src="fotos/foto.jpg">
 <img src="fotos/foto1.jpg">
 <img src="fotos/foto2.jpg">
@@ -250,76 +244,60 @@ Desde o dia que te conheci, me senti mais completa.
 <img src="fotos/foto5.jpg">
 <img src="fotos/foto6.jpg">
 <img src="fotos/foto7.jpg">
-
 </div>
 </div>
-
 <button onclick="proxima()">➡</button>
-
 </div>
 
 <button class="btn" id="botao">Ver surpresa ❤️</button>
-
 <div id="mensagem"></div>
 
 <div class="timeline">
-
 <h2>Nossa História 💖</h2>
-
 <div class="timeline-item">
 <img src="fotos/foto.jpg">
 <div class="data">19/10/2024</div>
 <p>Nos conhecemos no Halloween</p>
 </div>
-
 <div class="timeline-item">
 <img src="fotos/foto1.jpg">
 <div class="data">08/12/2024</div>
 <p>Fomos juntos à praia pela primeira vez</p>
 </div>
-
 <div class="timeline-item">
 <img src="fotos/foto2.jpg">
 <div class="data">24/12/2024</div>
 <p>1° Natal juntos</p>
 </div>
-
 <div class="timeline-item">
 <img src="fotos/foto3.jpg">
 <div class="data">07/03/2025</div>
 <p>Nos eternizamos na pele</p>
 </div>
-
 <div class="timeline-item">
 <img src="fotos/foto4.jpg">
 <div class="data">21/04/2025</div>
 <p>Primeira viagem juntos</p>
 </div>
-
 <div class="timeline-item">
 <img src="fotos/foto5.jpg">
 <div class="data">26/04/2025</div>
 <p>Fingimos que iríamos casar pra conhecer o castelo</p>
 </div>
-
 <div class="timeline-item">
 <img src="fotos/foto6.jpg">
 <div class="data">01/11/2025</div>
 <p>Momento importante e feliz</p>
 </div>
-
 <div class="timeline-item">
 <img src="fotos/foto7.jpg">
 <div class="data">27/02/2026</div>
 <p>Nossa família feliz</p>
 </div>
-
 </div>
-
 </div>
 
 <script>
-
 const inicio=new Date(2025,0,12);
 
 function atualizarContador(){
@@ -328,26 +306,29 @@ const diff=agora-inicio;
 const dias=Math.floor(diff/(1000*60*60*24));
 document.getElementById("contador").innerHTML="<strong style='color:#7b1fa2;'>"+dias+" dias</strong>";
 }
-
 setInterval(atualizarContador,1000);
 atualizarContador();
 
 function abrirCarta(){
 const env = document.getElementById("env");
+const musica = document.getElementById("musica");
+
 if(env.classList.contains("abrir")) return;
+
+// Comando para iniciar a música imediatamente após a interação
+musica.play().catch(e => console.log("Erro ao tocar:", e));
 
 env.classList.add("abrir");
 
-// Toca a música e some com a tela inicial após a animação
 setTimeout(()=>{
 document.getElementById("tela").style.opacity="0";
 setTimeout(() => {
     document.getElementById("tela").style.display="none";
-    document.getElementById("musica").play();
 }, 1000);
 }, 2000);
 }
 
+/* CARROSSEL E LÓGICA RESTANTE */
 let atual=0;
 const track=document.getElementById("track");
 const total=8;
@@ -369,28 +350,13 @@ atualizarCarrossel();
 }
 
 const frases=[
-"Didy e Teteu, Teteu e Didy ❤️",
-"Com você tudo fica mais bonito.",
-"Você é meu lugar favorito.",
-"Eu escolheria você mil vezes.",
-"Nosso amor é minha parte favorita.",
-"Você é minha pessoa favorita.",
-"Cada segundo com você vale a pena.",
-"Nosso amor é minha parte favorita da vida.",
-"Amar você é a coisa mais fácil que já fiz.",
-"Obrigada por fazer minha vida mais feliz.",
-"Você transforma qualquer momento em memória.",
-"Eu escolheria você em todas as vidas.",
-"Nosso amor é a melhor coincidência da minha vida.",
-"Você é meu sorriso favorito.",
-"Meu coração sempre encontra o seu.",
-"Você é a melhor parte dos meus dias.",
-"Com você tudo faz sentido.",
-"Meu mundo ficou mais bonito depois que você chegou.",
-"Nosso amor merece mil comemorações.",
-"Eu amo a vida que tenho com você.",
-"Obrigada por ser exatamente quem você é.",
-"Eu amo nós dois."
+"Didy e Teteu, Teteu e Didy ❤️", "Com você tudo fica mais bonito.", "Você é meu lugar favorito.", "Eu escolheria você mil vezes.",
+"Nosso amor é minha parte favorita.", "Você é minha pessoa favorita.", "Cada segundo com você vale a pena.",
+"Nosso amor é minha parte favorita da vida.", "Amar você é a coisa mais fácil que já fiz.", "Obrigada por fazer minha vida mais feliz.",
+"Você transforma qualquer momento em memória.", "Eu escolheria você em todas as vidas.", "Nosso amor é a melhor coincidência da minha vida.",
+"Você é meu sorriso favorito.", "Meu coração sempre encontra o seu.", "Você é a melhor parte dos meus dias.",
+"Com você tudo faz sentido.", "Meu mundo ficou mais bonito depois que você chegou.", "Nosso amor merece mil comemorações.",
+"Eu amo a vida que tenho com você.", "Obrigada por ser exatamente quem você é.", "Eu amo nós dois."
 ];
 
 let intervaloAtivo = null;
@@ -419,15 +385,9 @@ c.style.top=window.innerHeight/2+"px";
 c.style.fontSize="24px";
 c.style.pointerEvents="none";
 document.body.appendChild(c);
-
 let x=(Math.random()-0.5)*600;
 let y=(Math.random()-0.5)*600;
-
-c.animate([
-{transform:"translate(0,0)",opacity:1},
-{transform:`translate(${x}px,${y}px)`,opacity:0}
-],{duration:1200});
-
+c.animate([{transform:"translate(0,0)",opacity:1},{transform:`translate(${x}px,${y}px)`,opacity:0}],{duration:1200});
 setTimeout(()=>c.remove(),1200);
 }
 }
@@ -457,22 +417,16 @@ if(!isHolding) {
 }
 }
 
+/* CANVAS E EFEITOS */
 const canvas=document.getElementById("space");
 const ctx=canvas.getContext("2d");
-function resize() {
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-}
+function resize() { canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
 window.onresize = resize;
 resize();
 
 let estrelas=[];
 for(let i=0;i<300;i++){
-estrelas.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*1.5
-});
+estrelas.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5});
 }
 
 function animar(){
@@ -511,10 +465,7 @@ let y=0;
 const queda=setInterval(()=>{
 y+=20;
 estrela.style.top=y+"px";
-if(y>window.innerHeight){
-clearInterval(queda);
-estrela.remove();
-}
+if(y>window.innerHeight){ clearInterval(queda); estrela.remove(); }
 },30);
 },1500);
 
@@ -530,13 +481,9 @@ let y=0;
 const queda=setInterval(()=>{
 y+=10;
 c.style.top=y+"px";
-if(y>window.innerHeight){
-clearInterval(queda);
-c.remove();
-}
+if(y>window.innerHeight){ clearInterval(queda); c.remove(); }
 },40);
 },900);
-
 </script>
 
 </body>
