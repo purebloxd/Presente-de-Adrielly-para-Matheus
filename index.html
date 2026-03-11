@@ -149,12 +149,10 @@ transform:translateY(-120px);
 <body>
 
 <div class="tela-inicial" id="tela">
-
 <div class="envelope" id="env">
 <div class="tampa"></div>
 <div class="carta" onclick="abrirCarta()">Abra aqui 💌</div>
 </div>
-
 </div>
 
 <audio id="musica" loop>
@@ -168,13 +166,9 @@ transform:translateY(-120px);
 <p>Estamos juntos há <span id="contador"></span></p>
 
 <div class="carrossel">
-
 <button onclick="voltar()">⬅</button>
-
 <img id="fotoCarrossel" src="foto.jpg">
-
 <button onclick="proxima()">➡</button>
-
 </div>
 
 <button class="btn" id="botao">Ver surpresa ❤️</button>
@@ -234,41 +228,32 @@ transform:translateY(-120px);
 </div>
 
 </div>
-
 </div>
 
 <script>
 
-const inicio=new Date("2025-01-12");
+const inicio = new Date("2024-10-19");
 
 function atualizarContador(){
-
-const agora=new Date();
-
-const diff=agora-inicio;
-
-const dias=Math.floor(diff/(1000*60*60*24));
-
-document.getElementById("contador").innerHTML=dias+" dias";
-
+const agora = new Date();
+const diff = agora - inicio;
+const dias = Math.floor(diff/(1000*60*60*24));
+document.getElementById("contador").innerHTML = dias + " dias";
 }
 
 setInterval(atualizarContador,1000);
-
 atualizarContador();
 
 function abrirCarta(){
+const env = document.getElementById("env");
+const tela = document.getElementById("tela");
 
-document.getElementById("env").classList.add("abrir");
+env.classList.add("abrir");
 
 setTimeout(()=>{
-
-document.getElementById("tela").style.display="none";
-
+tela.style.display="none";
 document.getElementById("musica").play();
-
-},2000);
-
+},1500);
 }
 
 const fotos=[
@@ -285,35 +270,18 @@ const fotos=[
 let atual=0;
 
 function proxima(){
-
 atual++;
-
-if(atual>=fotos.length){
-
-atual=0;
-
-}
-
+if(atual>=fotos.length){atual=0;}
 document.getElementById("fotoCarrossel").src=fotos[atual];
-
 }
 
 function voltar(){
-
 atual--;
-
-if(atual<0){
-
-atual=fotos.length-1;
-
-}
-
+if(atual<0){atual=fotos.length-1;}
 document.getElementById("fotoCarrossel").src=fotos[atual];
-
 }
 
 const frases=[
-
 "Didy e Teteu, Teteu e Didy ❤️",
 "Com você tudo fica mais bonito.",
 "Você é meu lugar favorito.",
@@ -336,45 +304,28 @@ const frases=[
 "Eu amo a vida que tenho com você.",
 "Obrigada por ser exatamente quem você é.",
 "Eu amo nós dois."
-
 ];
 
 function surpresa(){
-
 const frase=frases[Math.floor(Math.random()*frases.length)];
-
 const caixa=document.getElementById("mensagem");
-
 caixa.innerText=frase;
-
 caixa.style.display="block";
-
 }
 
 const botao=document.getElementById("botao");
-
 let tempo;
 
 botao.onmousedown=()=>{
-
 tempo=setTimeout(()=>{
-
-const caixa=document.getElementById("mensagem");
-
-caixa.innerText="💌 Pra sempre nós! 💌";
-
-caixa.style.display="block";
-
+document.getElementById("mensagem").innerText="💌 para sempre nós 💌";
+document.getElementById("mensagem").style.display="block";
 },3000);
-
 }
 
 botao.onmouseup=()=>{
-
 clearTimeout(tempo);
-
 surpresa();
-
 }
 
 </script>
