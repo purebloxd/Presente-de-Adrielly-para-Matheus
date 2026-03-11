@@ -284,14 +284,14 @@ Desde o dia que te conheci, me senti mais completa.
 <script>
 
 /* CONTADOR CORRETO */
-// Janeiro é mês 0 no JavaScript. Ajustado para 12/01/2025.
 const inicio=new Date(2025,0,12);
 
 function atualizarContador(){
 const agora=new Date();
 const diff=agora-inicio;
 const dias=Math.floor(diff/(1000*60*60*24));
-document.getElementById("contador").innerHTML=dias+" dias";
+// Número em negrito aqui:
+document.getElementById("contador").innerHTML="<strong>"+dias+" dias</strong>";
 }
 
 setInterval(atualizarContador,1000);
@@ -353,11 +353,11 @@ const frases=[
 "Eu amo nós dois."
 ];
 
-/* TEXTO DIGITANDO COM CORREÇÃO DE EMBARALHAMENTO */
-let intervaloAtivo = null; // Para controlar o bug das frases
+/* TEXTO DIGITANDO SEM EMBARALHAR */
+let intervaloAtivo = null;
 
 function digitarTexto(texto,elemento){
-clearInterval(intervaloAtivo); // Para a digitação anterior se clicar rápido
+clearInterval(intervaloAtivo); 
 elemento.innerHTML="";
 let i=0;
 intervaloAtivo=setInterval(()=>{
