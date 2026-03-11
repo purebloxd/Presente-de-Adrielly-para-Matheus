@@ -1,477 +1,53 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nossa História ❤️</title>
+<div class="timeline">
 
-<style>
+<h2>Nossa História 💖</h2>
 
-body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-text-align:center;
-overflow-x:hidden;
-color:#333;
-background:radial-gradient(circle at center,#12002f,#000000);
-}
-
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
-
-.container{
-max-width:450px;
-margin:auto;
-padding:20px;
-background:white;
-border-radius:25px;
-box-shadow:0 10px 40px rgba(0,0,0,.4);
-margin-top:40px;
-}
-
-img{
-width:100%;
-border-radius:10px;
-}
-
-.btn{
-background:linear-gradient(45deg,#ba68c8,#ec407a);
-border:none;
-padding:15px;
-border-radius:40px;
-color:white;
-font-size:16px;
-cursor:pointer;
-margin-top:15px;
-}
-
-#mensagem{
-margin-top:20px;
-display:none;
-font-weight:bold;
-color:#7b1fa2;
-}
-
-.carrossel{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
-margin:20px 0;
-}
-
-.carrossel img{
-width:250px;
-}
-
-.tela-inicial{
-position:fixed;
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#000000aa;
-z-index:10;
-}
-
-.envelope{
-width:220px;
-height:140px;
-background:#ec407a;
-border-radius:10px;
-position:relative;
-cursor:pointer;
-}
-
-.tampa{
-position:absolute;
-width:100%;
-height:100%;
-background:#f06292;
-clip-path:polygon(0 0,100% 0,50% 60%);
-transform-origin:top;
-transition:1s;
-}
-
-.carta{
-position:absolute;
-width:180px;
-height:100px;
-background:white;
-top:40px;
-left:20px;
-border-radius:6px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:bold;
-cursor:pointer;
-}
-
-.envelope.abrir .tampa{
-transform:rotateX(180deg);
-}
-
-.envelope.abrir .carta{
-transform:translateY(-120px);
-}
-
-.coracao{
-position:fixed;
-font-size:20px;
-pointer-events:none;
-}
-
-.fundoCoracao{
-position:fixed;
-font-size:18px;
-opacity:0.5;
-animation:subir 12s linear infinite;
-}
-
-@keyframes subir{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-100vh);}
-}
-
-</style>
-</head>
-
-<body>
-
-<canvas id="espaco"></canvas>
-
-<div class="tela-inicial" id="tela">
-<div class="envelope" id="env">
-<div class="tampa"></div>
-<div class="carta" onclick="abrirCarta()">Abra aqui 💌</div>
-</div>
+<div class="timeline-item">
+<img src="fotos/foto.jpg">
+<div class="data">19/10/2024</div>
+<p>Nos conhecemos no Halloween</p>
 </div>
 
-<audio id="musica" loop>
-<source src="musica_tema.mp3" type="audio/mpeg">
-</audio>
-
-<div class="container">
-
-<h2>Feliz 1 ano e 2 meses ❤️</h2>
-
-<p>Estamos juntos há <span id="contador"></span></p>
-
-<div class="carrossel">
-<button onclick="voltar()">⬅</button>
-<img id="fotoCarrossel" src="fotos/foto.jpg">
-<button onclick="proxima()">➡</button>
+<div class="timeline-item">
+<img src="fotos/foto1.jpg">
+<div class="data">08/12/2024</div>
+<p>Fomos juntos à praia pela primeira vez</p>
 </div>
 
-<button class="btn" id="botao">Ver surpresa ❤️</button>
-
-<div id="mensagem"></div>
-
+<div class="timeline-item">
+<img src="fotos/foto2.jpg">
+<div class="data">24/12/2024</div>
+<p>1° Natal juntos</p>
 </div>
 
-<script>
-
-/* contador */
-
-const inicio=new Date("2025-01-12");
-
-function atualizarContador(){
-const agora=new Date();
-const diff=agora-inicio;
-const dias=Math.floor(diff/(1000*60*60*24));
-document.getElementById("contador").innerHTML=dias+" dias";
-}
-
-setInterval(atualizarContador,1000);
-atualizarContador();
-
-/* envelope */
-
-function abrirCarta(){
-
-document.getElementById("env").classList.add("abrir");
-
-setTimeout(()=>{
-document.getElementById("tela").style.display="none";
-document.getElementById("musica").play();
-},1500);
-
-}
-
-/* carrossel */
-
-const fotos=[
-"foto.jpg",
-"foto1.jpg",
-"foto2.jpg",
-"foto3.jpg",
-"foto4.jpg",
-"foto5.jpg",
-"foto6.jpg",
-"foto7.jpg"
-];
-
-let atual=0;
-
-function proxima(){
-atual++;
-if(atual>=fotos.length) atual=0;
-document.getElementById("fotoCarrossel").src=fotos[atual];
-}
-
-function voltar(){
-atual--;
-if(atual<0) atual=fotos.length-1;
-document.getElementById("fotoCarrossel").src=fotos[atual];
-}
-
-/* frases */
-
-const frases=[
-
-"Didy e Teteu, Teteu e Didy ❤️",
-"Com você tudo fica mais bonito.",
-"Você é meu lugar favorito.",
-"Eu escolheria você mil vezes.",
-"Nosso amor é minha parte favorita.",
-"Você é minha pessoa favorita.",
-"Cada segundo com você vale a pena.",
-"Nosso amor é minha parte favorita da vida.",
-"Amar você é a coisa mais fácil que já fiz.",
-"Obrigada por fazer minha vida mais feliz.",
-"Você transforma qualquer momento em memória.",
-"Eu escolheria você em todas as vidas.",
-"Nosso amor é a melhor coincidência da minha vida.",
-"Você é meu sorriso favorito.",
-"Meu coração sempre encontra o seu.",
-"Você é a melhor parte dos meus dias.",
-"Com você tudo faz sentido.",
-"Meu mundo ficou mais bonito depois que você chegou.",
-"Nosso amor merece mil comemorações.",
-"Eu amo a vida que tenho com você.",
-"Obrigada por ser exatamente quem você é.",
-"Eu amo nós dois."
-
-];
-
-/* botão */
-
-const botao=document.getElementById("botao");
-
-botao.onclick=function(){
-
-const frase=frases[Math.floor(Math.random()*frases.length)];
-
-const caixa=document.getElementById("mensagem");
-
-caixa.innerText=frase;
-
-caixa.style.display="block";
-
-explodir();
-
-};
-
-/* frase secreta */
-
-let tempo;
-
-botao.onmousedown=function(){
-
-tempo=setTimeout(function(){
-
-const caixa=document.getElementById("mensagem");
-
-caixa.innerText="💌 Pra sempre nós!";
-
-caixa.style.display="block";
-
-},3000);
-
-};
-
-botao.onmouseup=function(){
-clearTimeout(tempo);
-};
-
-/* explosão de corações */
-
-function explodir(){
-
-for(let i=0;i<60;i++){
-
-const c=document.createElement("div");
-
-c.className="coracao";
-
-c.innerHTML=Math.random()>0.5?"💜":"❤️";
-
-document.body.appendChild(c);
-
-let x=window.innerWidth/2;
-let y=window.innerHeight/2;
-
-let vx=(Math.random()-0.5)*12;
-let vy=(Math.random()-0.5)*12;
-
-let op=1;
-
-const loop=setInterval(function(){
-
-x+=vx;
-y+=vy;
-
-vy+=0.3;
-
-op-=0.02;
-
-c.style.left=x+"px";
-c.style.top=y+"px";
-c.style.opacity=op;
-
-if(op<=0){
-
-clearInterval(loop);
-
-c.remove();
-
-}
-
-},25);
-
-}
-
-}
-
-/* galáxia */
-
-const canvas=document.getElementById("espaco");
-
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let estrelas=[];
-
-for(let i=0;i<200;i++){
-
-estrelas.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2
-
-});
-
-}
-
-function animar(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="white";
-
-for(let i=0;i<estrelas.length;i++){
-
-let e=estrelas[i];
-
-ctx.beginPath();
-ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
-ctx.fill();
-
-}
-
-requestAnimationFrame(animar);
-
-}
-
-animar();
-
-/* estrelas cadentes */
-
-setInterval(function(){
-
-const estrela=document.createElement("div");
-
-estrela.innerHTML="✨";
-
-estrela.style.position="fixed";
-estrela.style.left=Math.random()*window.innerWidth+"px";
-estrela.style.top="-20px";
-estrela.style.fontSize="20px";
-
-document.body.appendChild(estrela);
-
-let y=0;
-
-const queda=setInterval(function(){
-
-y+=15;
-
-estrela.style.top=y+"px";
-
-if(y>window.innerHeight){
-
-clearInterval(queda);
-
-estrela.remove();
-
-}
-
-},30);
-
-},4000);
-
-/* corações no fundo */
-
-setInterval(function(){
-
-const c=document.createElement("div");
-
-c.className="fundoCoracao";
-
-c.innerHTML=Math.random()>0.5?"💜":"❤️";
-
-c.style.left=Math.random()*window.innerWidth+"px";
-
-document.body.appendChild(c);
-
-setTimeout(function(){
-
-c.remove();
-
-},12000);
-
-},1200);
-
-/* texto no céu */
-
-setTimeout(function(){
-
-const texto=document.createElement("div");
-
-texto.innerHTML="Didy ❤️ Teteu";
-
-texto.style.position="fixed";
-texto.style.top="20%";
-texto.style.left="50%";
-texto.style.transform="translateX(-50%)";
-texto.style.fontSize="40px";
-texto.style.color="white";
-texto.style.opacity="0.8";
-
-document.body.appendChild(texto);
-
-},6000);
-
-</script>
-
-</body>
-</html>
+<div class="timeline-item">
+<img src="fotos/foto3.jpg">
+<div class="data">07/03/2025</div>
+<p>Nos eternizamos na pele</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto4.jpg">
+<div class="data">21/04/2025</div>
+<p>Primeira viagem juntos</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto5.jpg">
+<div class="data">26/04/2025</div>
+<p>Fingimos que iríamos casar pra conhecer o castelo</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto6.jpg">
+<div class="data">01/11/2025</div>
+<p>Momento importante e feliz</p>
+</div>
+
+<div class="timeline-item">
+<img src="fotos/foto7.jpg">
+<div class="data">27/02/2026</div>
+<p>Nossa família feliz</p>
+</div>
+
+</div>
