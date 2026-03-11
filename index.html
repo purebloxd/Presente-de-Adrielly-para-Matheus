@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nossa História ❤️</title>
+
     <style>
+        /* O SEU FUNDO ANIMADO ESTÁ AQUI */
         body {
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            color: #333;
             text-align: center;
             overflow-x: hidden;
+            color: #333;
             background: linear-gradient(270deg, #7b1fa2, #ce93d8, #90caf9, #f48fb1);
             background-size: 800% 800%;
             animation: fundo 18s ease infinite;
@@ -22,16 +25,28 @@
             100% { background-position: 0% 50% }
         }
 
+        /* AS SUAS ESTRELAS */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
         .container {
             max-width: 450px;
-            margin: 20px auto;
+            margin: auto;
             padding: 20px;
             background: white;
             border-radius: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, .3);
+            margin-top: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
         }
 
-        img { width: 100%; border-radius: 10px; }
+        img { width: 100%; border-radius: 12px; }
 
         .btn {
             background: linear-gradient(45deg, #ba68c8, #ec407a);
@@ -42,7 +57,7 @@
             font-size: 16px;
             cursor: pointer;
             margin-top: 15px;
-            width: 100%;
+            width: 80%;
             font-weight: bold;
         }
 
@@ -51,41 +66,32 @@
             display: none;
             font-weight: bold;
             color: #7b1fa2;
-            font-size: 1.1rem;
-            line-height: 1.4;
-        }
-
-        .carrossel {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .carrossel img {
-            width: 250px;
-            height: 350px;
-            object-fit: cover;
+            padding: 15px;
+            background: #f3e5f5;
             border-radius: 15px;
         }
 
-        .carrossel button {
-            background: #ba68c8;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            font-size: 20px;
+        .carrossel-container {
+            width: 250px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .timeline { margin-top: 40px; }
-        .timeline-item { margin-bottom: 40px; padding: 10px; border-bottom: 1px dashed #ce93d8; }
-        .data { font-weight: bold; color: #8e24aa; margin-top: 10px; font-size: 1.1rem; }
+        .carrossel-track {
+            display: flex;
+            transition: transform .6s ease;
+        }
 
-        /* Estilos do Envelope */
+        .carrossel-track img {
+            width: 250px;
+            height: 350px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        /* TELA INICIAL DO ENVELOPE */
         .tela-inicial {
             position: fixed;
             width: 100%;
@@ -93,8 +99,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            background: rgba(0,0,0,.8);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 100;
         }
 
@@ -138,132 +143,118 @@
         .envelope.abrir .carta { transform: translateY(-100px); }
     </style>
 </head>
+
 <body>
 
-<div class="tela-inicial" id="tela">
-    <div class="envelope" id="env" onclick="abrirCarta()">
-        <div class="tampa"></div>
-        <div class="carta">Abra aqui 💌</div>
-    </div>
-    <p style="color: white; margin-top: 20px;">Clique no presente para o Matheus</p>
-</div>
+    <canvas id="space"></canvas>
 
-<audio id="musica" loop>
-    <source src="música.mp3" type="audio/mpeg">
-</audio>
-
-<div class="container">
-    <h2>Feliz 1 ano e 2 meses ❤️</h2>
-    <p>Estamos juntos há <span id="contador" style="color:#ec407a; font-weight:bold;"></span></p>
-
-    <div class="carrossel">
-        <button onclick="voltar()">⬅</button>
-        <img id="fotoCarrossel" src="fotos/foto.jpg">
-        <button onclick="proxima()">➡</button>
+    <div class="tela-inicial" id="tela">
+        <div class="envelope" id="env" onclick="abrirCarta()">
+            <div class="tampa"></div>
+            <div class="carta">Abra aqui 💌</div>
+        </div>
     </div>
 
-    <button class="btn" id="botao" onclick="surpresa()">Ver surpresa ❤️</button>
-    <div id="mensagem"></div>
+    <audio id="musica" loop>
+        <source src="musica_tema.mp3" type="audio/mpeg">
+    </audio>
 
-    <div class="timeline">
-        <h2>Nossa História 💖</h2>
+    <div class="container">
+        <h2>Feliz 1 ano e 2 meses ❤️</h2>
+        <p>Estamos juntos há <span id="contador" style="font-weight: bold; color: #ec407a;"></span></p>
+
+        <div class="carrossel-container">
+            <div class="carrossel-track" id="track">
+                <img src="fotos/foto.jpg">
+                <img src="fotos/foto1.jpg">
+                <img src="fotos/foto2.jpg">
+                <img src="fotos/foto3.jpg">
+                <img src="fotos/foto4.jpg">
+                <img src="fotos/foto5.jpg">
+                <img src="fotos/foto6.jpg">
+                <img src="fotos/foto7.jpg">
+            </div>
+        </div>
         
-        <div class="timeline-item">
-            <img src="fotos/foto.jpg">
-            <div class="data">19/10/2024</div>
-            <p>Nos conhecemos no Halloween 🎃</p>
+        <div style="display:flex; justify-content:center; gap:10px;">
+            <button class="btn" style="width:40px;" onclick="voltar()">⬅</button>
+            <button class="btn" id="botao">Ver surpresa ❤️</button>
+            <button class="btn" style="width:40px;" onclick="proxima()">➡</button>
         </div>
 
-        <div class="timeline-item">
-            <img src="fotos/foto1.jpg">
-            <div class="data">12/01/2025</div>
-            <p>O dia que oficialmente começamos nossa história ❤️</p>
-        </div>
+        <div id="mensagem"></div>
 
-        <div class="timeline-item">
-            <img src="fotos/foto2.jpg">
-            <div class="data">07/03/2025</div>
-            <p>Nos eternizamos na pele 🖋️</p>
-        </div>
-
-        <div class="timeline-item">
-            <img src="fotos/foto3.jpg">
-            <div class="data">26/04/2025</div>
-            <p>Nossa visita ao castelo 🏰</p>
+        <div style="margin-top:30px;">
+            <h3>Nossa Linha do Tempo 💖</h3>
+            <p>19/10/2024 - O dia que nos conhecemos no Halloween 🎃</p>
+            <p>12/01/2025 - O início de tudo ❤️</p>
+            <p>07/03/2025 - Nossa tattoo 🖋️</p>
         </div>
     </div>
-</div>
 
-<script>
-    // 1. AJUSTE DO CONTADOR (Data oficial: 12/01/2025)
-    // Mês 0 = Janeiro no JavaScript
-    const dataInicio = new Date(2025, 0, 12); 
+    <script>
+        // TODAS AS SUAS FUNÇÕES ESTÃO AQUI EMBAIXO
+        const inicio = new Date(2025, 0, 12); 
+        function atualizarContador() {
+            const agora = new Date();
+            const diff = agora - inicio;
+            const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("contador").innerHTML = dias + " dias";
+        }
+        setInterval(atualizarContador, 1000);
+        atualizarContador();
 
-    function atualizarContador() {
-        const agora = new Date();
-        const diff = agora - dataInicio;
-        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-        document.getElementById("contador").innerHTML = dias + " dias";
-    }
-    setInterval(atualizarContador, 1000);
-    atualizarContador();
+        function abrirCarta() {
+            document.getElementById("env").classList.add("abrir");
+            setTimeout(() => {
+                document.getElementById("tela").style.display = "none";
+                document.getElementById("musica").play();
+            }, 1500);
+        }
 
-    // 2. FUNÇÃO DA MÚSICA E ENVELOPE
-    function abrirCarta() {
-        const env = document.getElementById("env");
-        env.classList.add("abrir");
-        setTimeout(() => {
-            document.getElementById("tela").style.display = "none";
-            const som = document.getElementById("musica");
-            som.volume = 0.5;
-            som.play().catch(e => console.log("Áudio aguardando interação"));
-        }, 1500);
-    }
+        let atual = 0;
+        function proxima() { atual = (atual + 1) % 8; document.getElementById("track").style.transform = `translateX(-${atual * 250}px)`; }
+        function voltar() { atual = (atual - 1 + 8) % 8; document.getElementById("track").style.transform = `translateX(-${atual * 250}px)`; }
 
-    // 3. CARROSSEL DE FOTOS (Usando sua pasta /fotos)
-    const fotos = [
-        "fotos/foto.jpg",
-        "fotos/foto1.jpg",
-        "fotos/foto2.jpg",
-        "fotos/foto3.jpg",
-        "fotos/foto4.jpg",
-        "fotos/foto5.jpg",
-        "fotos/foto6.jpg",
-        "fotos/foto7.jpg"
-    ];
-    let atual = 0;
+        let intervaloDigitacao;
+        function digitarTexto(texto, elemento) {
+            clearInterval(intervaloDigitacao);
+            elemento.innerHTML = "";
+            let i = 0;
+            intervaloDigitacao = setInterval(() => {
+                elemento.innerHTML += texto.charAt(i);
+                i++;
+                if (i >= texto.length) clearInterval(intervaloDigitacao);
+            }, 50);
+        }
 
-    function proxima() {
-        atual = (atual + 1) % fotos.length;
-        document.getElementById("fotoCarrossel").src = fotos[atual];
-    }
+        document.getElementById("botao").onclick = () => {
+            const frases = ["Te amo!", "Você é o melhor!", "Didy e Teteu sempre ❤️"];
+            digitarTexto(frases[Math.floor(Math.random() * frases.length)], document.getElementById("mensagem"));
+            document.getElementById("mensagem").style.display = "block";
+        };
 
-    function voltar() {
-        atual = (atual - 1 + fotos.length) % fotos.length;
-        document.getElementById("fotoCarrossel").src = fotos[atual];
-    }
+        // ESTRELAS NO FUNDO
+        const canvas = document.getElementById("space");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let estrelas = [];
+        for (let i = 0; i < 100; i++) { estrelas.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 }); }
+        function animar() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "white";
+            for (let e of estrelas) { ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2); ctx.fill(); }
+            requestAnimationFrame(animar);
+        }
+        animar();
 
-    // 4. FRASES DA SURPRESA (CORRIGIDAS)
-    const frases = [
-        "Didy e Teteu, Teteu e Didy ❤️",
-        "Com você tudo fica mais bonito.",
-        "Você é meu lugar favorito.",
-        "Eu escolheria você mil vezes.",
-        "Nosso amor é minha parte favorita da vida.",
-        "Amar você é a coisa mais fácil que já fiz.",
-        "Obrigada por fazer minha vida mais feliz."
-    ];
-
-    function surpresa() {
-        const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
-        const caixa = document.getElementById("mensagem");
-        caixa.innerText = fraseAleatoria; // Texto limpo sem erros
-        caixa.style.display = "block";
-        
-        // Garante que a música toque ao interagir com o botão
-        document.getElementById("musica").play();
-    }
-</script>
-
+        // CORAÇÕES CAINDO
+        setInterval(() => {
+            const el = document.createElement("div");
+            el.innerHTML = "❤️"; el.style.position = "fixed"; el.style.left = Math.random() * window.innerWidth + "px"; el.style.top = "-20px";
+            document.body.appendChild(el);
+            let y = 0;
+            const queda = setInterval(() => { y += 3; el.style.top = y + "px"; if (y > window.innerHeight) { clearInterval(queda); el.remove(); } }, 30);
+        }, 1000);
+    </script>
 </body>
 </html>
